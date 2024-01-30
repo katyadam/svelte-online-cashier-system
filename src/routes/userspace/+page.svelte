@@ -35,10 +35,10 @@
 </script>
   
 <main>
-	<SearchHeader entityName="Product planes"/>
+	<SearchHeader entityName="Product planes" openShopPanel={null}/>
     {#if apiData}
         <div class="grid-container">
-            {#each apiData as item (item.id)}
+            {#each apiData.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
                 <a href="/userspace/{item.id}" class="button">
                   <ProductPlaneCard productPlane={item}/>
 				</a>

@@ -1,7 +1,7 @@
-// TODO: decompose + add product-plane name editing
-
 <script lang="ts">
     export let entityName: String | undefined;
+    export let openShopPanel: Function;
+    export let totalCount: number;
 </script>
 
 <head>
@@ -11,14 +11,19 @@
 <header>
     <div class="header">
         <div class="left-side">
-            <div class="import-button material-icons hamburger" title="Menu" >menu</div> <!-- Google icon for upload -->
-            <span class="title">{entityName}</span>                
-        </div>
-        <div class="right-side">
             <div class="search-bar">
                 <input type="text" placeholder="Search..." />
             </div>
-            <div class="import-button material-icons" title="Import product planes" >cloud_upload</div> <!-- Google icon for upload -->
+        </div>
+        <div class="right-side">
+            <span class="title">{entityName}</span>
+            <button class="import-button material-icons" title="Import product planes" >cloud_upload</button>
+            {#if openShopPanel != null}
+                <button class="import-button" title="checkout" on:click={() => openShopPanel()}>
+                    <span class="material-icons">shopping_cart</span>
+                    <span class="item-count">{totalCount}</span>
+                </button>
+            {/if}
         </div>
     </div>
 </header>
@@ -43,11 +48,6 @@
         margin-right: 10px;
     }
 
-    .hamburger {
-        cursor: pointer;
-        margin-right: 50px;
-    }
-
     .right-side {
         display: flex;
         align-items: center;
@@ -63,9 +63,11 @@
     }
 
     .import-button {
-        font-size: 24px;
         cursor: pointer;
         margin-left: 10px; /* Add margin to separate the import button from the search bar */
+        background: none;
+        border: none;
+        position: relative;
     }
 
     input {
@@ -73,5 +75,16 @@
         outline: none;
         width: 200px; /* Adjust the width as needed */
         padding: 5px;
+    }
+
+    .item-count {
+        position: absolute;
+        top: -40%;
+        right: -35%;
+        background-color: red;
+        color: white;
+        border-radius: 60%;
+        padding: 5px 8px;
+        font-size: 12px;
     }
 </style>

@@ -5,13 +5,14 @@
 
     export let closeForm: Function;
 
-    let name = "";
+    let name: string = "";
+    let price: number = 0;
 
     const handleSubmit = () => {
       let productDto: ProductDto = {
         name: name,
         productPlaneId: Number.parseInt($page.params.productPlane),
-        categoryId: 4 // TODO
+        price: price
       };
       createProduct(productDto);
       location.reload();
@@ -26,6 +27,7 @@
     <form on:submit|preventDefault={handleSubmit}>
       <label for="name">Name:</label>
       <input type="text" id="name" bind:value={name} required />
+      <input type="number" id="price" bind:value={price} required />
   
       <button type="submit">Create</button>
     </form>

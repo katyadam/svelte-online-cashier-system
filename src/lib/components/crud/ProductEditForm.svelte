@@ -6,13 +6,14 @@
     export let closeEditForm: Function;
     export let product: Product;
 
-    let name = product?.name;
+    let name: string = product?.name;
+    let price: number = product?.price;
 
     const handleSubmit = () => {
       let productDto: ProductDto = {
         name: name,
         productPlaneId: Number.parseInt($page.params.productPlane),
-        categoryId: 4 // TODO
+        price: price
       };
       updateProduct(product?.id, productDto);
       location.reload();
@@ -27,7 +28,9 @@
     <form on:submit|preventDefault={handleSubmit}>
       <label for="name">Name:</label>
       <input type="text" id="name" bind:value={name} required />
-  
+      <input type="number" id="price" bind:value={price} required />
+
+      
       <button type="submit">Edit</button>
     </form>
   </div>

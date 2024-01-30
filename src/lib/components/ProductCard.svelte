@@ -19,6 +19,7 @@
     {/if}
     <div class="card-content">
       <h2>{product ? product.name : "+"}</h2>
+      <h3>{product ? `Price: ${product.price}` : ""}</h3>
     </div>
 </div>
 
@@ -91,6 +92,9 @@
 
   .card-content {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   h2 {  

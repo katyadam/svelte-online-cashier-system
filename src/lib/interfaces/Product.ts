@@ -1,13 +1,11 @@
-import type { Category } from "./Category";
-
 export interface Product {
     id: number;
     name: string;
-    category: Category;
+    price: number;
 }
 
 export interface ProductDto {
     name: string;
     productPlaneId: number;
-    categoryId: number;
+    price: number;
 }

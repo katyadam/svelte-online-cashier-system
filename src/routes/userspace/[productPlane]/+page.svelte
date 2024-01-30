@@ -1,13 +1,15 @@
 <script lang="ts">
 	import type { ProductPlane } from "$lib/interfaces/ProductPlane";
+    import type { Product } from "$lib/interfaces/Product";
 	import { page } from "$app/stores";
     import { onMount } from "svelte";
     import SearchHeader from "$lib/components/SearchHeader.svelte";
+	import ShopPanel from "$lib/components/ShopPanel.svelte";
 	import ProductCard from "$lib/components/ProductCard.svelte";
     import Loading from "$lib/components/Loading.svelte";
 	import AddForm from "$lib/components/crud/ProductCreateForm.svelte";
 	import EditForm from "$lib/components/crud/ProductEditForm.svelte"
-    import type { Product } from "$lib/interfaces/Product";
+
 	let productPlane: ProductPlane | undefined;
 
 	onMount(async () => {
@@ -32,19 +34,78 @@
 	const openEditForm = (product: Product) => {
 		showEditForm = true;
 		productToEdit = product;
+		event?.stopPropagation()
 	}
 	const closeEditForm = () => {
 		showEditForm = false;
-	} 
+	}
+
+	let showShopPanel: boolean = false;
+	const openShopPanel = () => {
+		showShopPanel = true;
+	}
+
+	const closeShopPanel = () => {
+		showShopPanel = false;
+	}
+	
+	let shopProducts: Map<Product, number> = new Map();
+	let totalPrice: number = 0;
+	let totalCount: number = 0;
+	const removeProduct = (id: number) => {
+		let newShopProducts = shopProducts;
+		for (const [product, amount] of newShopProducts) {
+			if (product.id === id) {
+				newShopProducts.delete(product);
+				totalPrice -= amount * product.price;
+				totalCount -= amount;
+				break;
+			}
+		}
+		shopProducts = newShopProducts;
+	}
+	const addProduct = (product: Product) => {
+		let newShopProducts = shopProducts;
+		if (newShopProducts.has(product)) {
+			let currAmount = newShopProducts.get(product);
+			if (currAmount != undefined && currAmount > 0) {
+				newShopProducts.set(product, currAmount + 1);
+				shopProducts = newShopProducts;
+			} else {
+				console.error("Invalid product amount!")
+			}
+		} else {
+			shopProducts.set(product, 1);
+		}
+		totalPrice += product.price;
+		totalCount += 1
+	}
+	const decrProduct = (product: Product) => {
+		let newShopProducts = shopProducts;
+		if (newShopProducts.has(product)) {
+			let currentAmount = newShopProducts.get(product);
+			if (currentAmount == 1) {
+				removeProduct(product.id);
+				return;
+			} else {
+				newShopProducts.set(product, currentAmount ? currentAmount - 1 : 0);
+			}
+		}
+		shopProducts = newShopProducts;
+		totalPrice -= product.price;
+		totalCount -= 1;
+	}
 
 </script>
 
 <main>
-	<SearchHeader entityName={productPlane?.name}/>
+	<SearchHeader entityName={productPlane?.name} openShopPanel={openShopPanel} totalCount={totalCount}/>
 	{#if productPlane}
         <div class="grid-container">
-            {#each productPlane.productSet as product (product.id)}
-				<ProductCard product={product} openEditForm={openEditForm}/>
+            {#each productPlane.productSet.sort((a, b) => a.name.localeCompare(b.name)) as product (product.name)}
+				<button class="button" on:click={() => addProduct(product)}>
+					<ProductCard product={product} openEditForm={openEditForm}/>
+				</button>
             {/each}
 			<button class="button" on:click={openForm}>
 				<ProductCard product={null} openEditForm={openEditForm}/>
@@ -62,14 +123,23 @@
 	{/if}
 
 	{#if showEditForm}
-	<button class="overlay" on:click={closeEditForm}></button>
-	<div class="form-container">
-		<EditForm closeEditForm={closeEditForm} product={productToEdit}/>
-	</div>
-{/if}
-
-
-
+		<button class="overlay" on:click={closeEditForm}></button>
+		<div class="form-container">
+			<EditForm closeEditForm={closeEditForm} product={productToEdit}/>
+		</div>
+	{/if}
+	{#if showShopPanel}
+		<button class="shop-panel-overlay" on:click={closeShopPanel}></button>
+		<div class="shop-panel">
+			<ShopPanel
+				shopProducts={shopProducts}
+				removeProduct={removeProduct}
+				addProduct={addProduct}
+				decrProduct={decrProduct}
+				totalPrice={totalPrice}
+        />
+		</div>
+	{/if}
 </main>
 
 <style>
@@ -105,6 +175,30 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0, 252, 13, 0.5); /* Semi-transparent black overlay */
+		z-index: 999; /* Ensure the overlay is behind the form */
+	}
+
+	.shop-panel {
+        position: fixed;
+        top: 100px;
+        right: 0;
+        height: 70%;
+        width: 420px; /* Adjust the width as needed */
+        background-color: #fff;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        z-index: 1000; /* Ensure the panel is on top of other elements */
+		border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+	.shop-panel-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(186, 186, 186, 0.5); /* Semi-transparent black overlay */
 		z-index: 999; /* Ensure the overlay is behind the form */
 	}
 

@@ -22,13 +22,16 @@
     }
 
     const handleProceed = () => {
+        if (shopProducts.size == 0) {
+            return;
+        }
         let transactionDto: TransactionDto = {
             record: createRecord(),
             userId: 1, // TODO
         }
         
         createTransaction(transactionDto);
-        // location.reload();
+        location.reload();
     }
 
 </script>

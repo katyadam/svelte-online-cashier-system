@@ -116,7 +116,6 @@ export const updateProduct = async (id: number | undefined, productDto: ProductD
 }
 
 export const createTransaction = async (transactionDto: TransactionDto) => {
-	console.log(JSON.stringify(transactionDto));
 	
 	const response = await fetch(`${apiUrl}/transactions`, {
 		method: 'POST',

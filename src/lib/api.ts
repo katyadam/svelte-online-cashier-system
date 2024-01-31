@@ -1,5 +1,6 @@
 import type { ProductPlaneDto } from "./interfaces/ProductPlane";
 import type { ProductDto } from "./interfaces/Product";
+import type { TransactionDto, Transaction } from "./interfaces/Transaction";
 
 const apiUrl = 'http://localhost:8080';
 
@@ -114,4 +115,30 @@ export const updateProduct = async (id: number | undefined, productDto: ProductD
 	return response.json();
 }
 
+export const createTransaction = async (transactionDto: TransactionDto) => {
+	console.log(JSON.stringify(transactionDto));
+	
+	const response = await fetch(`${apiUrl}/transactions`, {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(transactionDto),
+	  });
+	
+	  if (!response.ok) {
+		throw new Error(`Failed to create Transaction: ${response.statusText}`);
+	  }
+	
+	  return response.json();
+}
 
+interface TransactionsResponse {
+	content: Transaction[];
+  }
+
+export const getUserTransactions = async (userId: number): Promise<Transaction[]> => {
+	const response = await fetch(`${apiUrl}/transactions`);
+	const result: TransactionsResponse = await response.json();
+	return result.content;
+}

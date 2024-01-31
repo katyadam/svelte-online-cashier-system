@@ -1,5 +1,7 @@
 <script lang="ts">
+    import { createTransaction } from "$lib/api";
     import type { Product } from "$lib/interfaces/Product";
+    import type { TransactionDto } from "$lib/interfaces/Transaction";
     import ShopPanelCard from "./ShopPanelCard.svelte";
 
     export let shopProducts: Map<Product, number>;
@@ -8,6 +10,26 @@
     export let decrProduct: Function;
 
     export let totalPrice: number;
+
+    const createRecord = (): string => {
+        const jsonObject: { [key: string]: number } = {};
+        for (const [product, amount] of shopProducts) {
+            const productKey = JSON.stringify(product);
+            jsonObject[productKey] = amount;
+        }
+
+        return JSON.stringify(jsonObject);
+    }
+
+    const handleProceed = () => {
+        let transactionDto: TransactionDto = {
+            record: createRecord(),
+            userId: 1, // TODO
+        }
+        
+        createTransaction(transactionDto);
+        // location.reload();
+    }
 
 </script>
 
@@ -18,8 +40,8 @@
 <div>
     <div class="top-bar">
         <span>Total price: {totalPrice}</span>
-        <button>
-            <span>Process</span>
+        <button on:click={handleProceed}>
+            <span>Proceed</span>
             <span class="material-icons">arrow_forward</span>
         </button>
     </div>
@@ -50,7 +72,7 @@
         cursor: pointer;
         padding: 7px;
         transition: background-color 0.3s ease;
-    }
+    }   
     .top-bar button:hover {
         background-color: #5cd41b;
     }

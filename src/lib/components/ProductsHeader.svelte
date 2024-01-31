@@ -1,6 +1,6 @@
 <script lang="ts">
     export let entityName: String | undefined;
-    export let openShopPanel: Function;
+    export let openShopPanel: Function | undefined;
     export let totalCount: number;
 </script>
 
@@ -19,7 +19,7 @@
             <span class="title">{entityName}</span>
             <button class="import-button material-icons" title="Import product planes" >cloud_upload</button>
             {#if openShopPanel != null}
-                <button class="import-button" title="checkout" on:click={() => openShopPanel()}>
+                <button class="import-button" title="checkout" on:click={() => openShopPanel ? openShopPanel() : undefined}>
                     <span class="material-icons">shopping_cart</span>
                     <span class="item-count">{totalCount}</span>
                 </button>

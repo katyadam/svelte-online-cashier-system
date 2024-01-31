@@ -3,7 +3,7 @@
     import type { Product } from "$lib/interfaces/Product";
 	import { page } from "$app/stores";
     import { onMount } from "svelte";
-    import SearchHeader from "$lib/components/SearchHeader.svelte";
+    import ProductsHeader from "$lib/components/ProductsHeader.svelte";
 	import ShopPanel from "$lib/components/ShopPanel.svelte";
 	import ProductCard from "$lib/components/ProductCard.svelte";
     import Loading from "$lib/components/Loading.svelte";
@@ -99,7 +99,7 @@
 </script>
 
 <main>
-	<SearchHeader entityName={productPlane?.name} openShopPanel={openShopPanel} totalCount={totalCount}/>
+	<ProductsHeader entityName={productPlane?.name} openShopPanel={openShopPanel} totalCount={totalCount}/>
 	{#if productPlane}
         <div class="grid-container">
             {#each productPlane.productSet.sort((a, b) => a.name.localeCompare(b.name)) as product (product.name)}

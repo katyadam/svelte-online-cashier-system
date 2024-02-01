@@ -4,7 +4,7 @@
     import type { ProductPlane } from "$lib/interfaces/ProductPlane";
     import ProductPlanesHeader from "$lib/components/ProductPlanesHeader.svelte";
 	import Loading from "$lib/components/Loading.svelte";
-    import AddForm from "$lib/components/crud/ProductPlaneCreateForm.svelte";
+    import ProductPlaneCreateForm from "$lib/components/crud/ProductPlaneCreateForm.svelte";
 	import TransactionsTable from "$lib/components/TransactionsTable.svelte";
 
     interface ApiResponse {
@@ -61,7 +61,7 @@
 	{#if showCreateForm}
 		<button class="overlay" on:click={closeForm}></button>
 		<div class="form-container">
-			<AddForm closeForm={closeForm} />
+			<ProductPlaneCreateForm closeForm={closeForm} />
 		</div>
 	{/if}
 
@@ -80,7 +80,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
       gap: 20px;
-      max-height: 700px; /* Set a maximum height for the grid container */
+      max-height: 700px;
       padding: 20px;
     }
 
@@ -107,8 +107,8 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 252, 13, 0.5); /* Semi-transparent black overlay */
-		z-index: 999; /* Ensure the overlay is behind the form */
+		background-color: rgba(0, 252, 13, 0.5);
+		z-index: 999;
 	}
 
 	.txs-table {
@@ -117,12 +117,12 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		height: 90%;
-		width: 70%; /* Adjust the width as needed */
+		width: 70%;
 		background-color: #fff;
 		box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 		overflow-y: auto;
 		z-index: 1000;
-		border-radius: 10px; /* Add border-radius for rounded corners */
+		border-radius: 10px;
 	}
 
 	.txs-table-overlay {
@@ -131,7 +131,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(186, 186, 186, 0.5); /* Semi-transparent black overlay */
+		background-color: rgba(186, 186, 186, 0.5);
 		z-index: 999;
 	}
 

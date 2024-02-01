@@ -1,6 +1,5 @@
 <script lang="ts">
     export let openTransactions: Function;
-
 </script>
 
 <head>
@@ -55,12 +54,12 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 5px;
-        margin-right: 10px; /* Add margin to separate the search bar from the import button */
+        margin-right: 10px;
     }
 
     .btn {
         cursor: pointer;
-        margin-left: 10px; /* Add margin to separate the import button from the search bar */
+        margin-left: 10px;
         background: none;
         border: none;
         position: relative;
@@ -69,18 +68,7 @@
     input {
         border: none;
         outline: none;
-        width: 200px; /* Adjust the width as needed */
+        width: 200px;
         padding: 5px;
-    }
-
-    .item-count {
-        position: absolute;
-        top: -40%;
-        right: -35%;
-        background-color: red;
-        color: white;
-        border-radius: 60%;
-        padding: 5px 8px;
-        font-size: 12px;
     }
 </style>

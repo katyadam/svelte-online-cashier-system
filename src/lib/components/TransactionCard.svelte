@@ -44,8 +44,8 @@
 
 <style>
     .card {
-        width: 100%; /* Adjust the width as needed */
-        margin: 20px auto; /* Center the table horizontally */
+        width: 100%;
+        margin: 20px auto;
         border: none;
     }
 

@@ -59,12 +59,12 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 5px;
-        margin-right: 10px; /* Add margin to separate the search bar from the import button */
+        margin-right: 10px;
     }
 
     .import-button {
         cursor: pointer;
-        margin-left: 10px; /* Add margin to separate the import button from the search bar */
+        margin-left: 10px;
         background: none;
         border: none;
         position: relative;
@@ -73,7 +73,7 @@
     input {
         border: none;
         outline: none;
-        width: 200px; /* Adjust the width as needed */
+        width: 200px;
         padding: 5px;
     }
 

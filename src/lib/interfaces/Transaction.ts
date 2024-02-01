@@ -5,6 +5,6 @@ export interface Transaction {
 }
 
 export interface TransactionDto {
-  record: string;
-  userId: number;
+	record: string;
+	userId: number;
 }

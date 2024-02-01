@@ -147,7 +147,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
-      max-height: 700px; /* Set a maximum height for the grid container */
+      max-height: 700px;
       padding: 15px;
     }
 
@@ -174,8 +174,8 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 252, 13, 0.5); /* Semi-transparent black overlay */
-		z-index: 999; /* Ensure the overlay is behind the form */
+		background-color: rgba(0, 252, 13, 0.5);
+		z-index: 999;
 	}
 
 	.shop-panel {
@@ -183,11 +183,11 @@
         top: 100px;
         right: 0;
         height: 70%;
-        width: 420px; /* Adjust the width as needed */
+        width: 420px;
         background-color: #fff;
         box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
         overflow-y: auto;
-        z-index: 1000; /* Ensure the panel is on top of other elements */
+        z-index: 1000;
 		border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
     }
@@ -198,8 +198,8 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(186, 186, 186, 0.5); /* Semi-transparent black overlay */
-		z-index: 999; /* Ensure the overlay is behind the form */
+		background-color: rgba(186, 186, 186, 0.5);
+		z-index: 999;
 	}
 
 </style>

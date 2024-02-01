@@ -11,11 +11,15 @@
 	import EditForm from "$lib/components/crud/ProductEditForm.svelte"
 	import { getProductPlane } from "$lib/services/ProductPlaneService";
 
-	let productPlane: ProductPlane | undefined;
+	let productPlane: ProductPlane | null = null;
+	let products: Product[] | null = null;
+	let initialProducts: Product[];
 
 	onMount(async () => {
 		try {
 			productPlane = await getProductPlane($page.params.productPlane);
+			products = productPlane.productSet;
+			initialProducts = productPlane.productSet;
 		} catch (error) {
 			console.log(error)
 		}
@@ -96,13 +100,28 @@
 		totalCount -= 1;
 	}
 
+	const filterData = async (searchTerm: string) => {
+		let filtered: Product[] = [];
+		initialProducts?.forEach(pp => {
+			if (pp.name.toLocaleLowerCase().startsWith(searchTerm.toLocaleLowerCase())) {
+				filtered.push(pp)
+			}
+		});
+		products = filtered;
+	}
+
 </script>
 
 <main>
-	<ProductsHeader entityName={productPlane?.name} openShopPanel={openShopPanel} totalCount={totalCount}/>
-	{#if productPlane}
+	<ProductsHeader	
+		entityName={productPlane?.name}
+		openShopPanel={openShopPanel}
+		totalCount={totalCount}
+		filterData={filterData}
+	/>
+	{#if products}
         <div class="grid-container">
-            {#each productPlane.productSet.sort((a, b) => a.name.localeCompare(b.name)) as product (product.name)}
+            {#each products.sort((a, b) => a.name.localeCompare(b.name)) as product (product.name)}
 				<button class="button" on:click={() => addProduct(product)}>
 					<ProductCard product={product} openEditForm={openEditForm}/>
 				</button>

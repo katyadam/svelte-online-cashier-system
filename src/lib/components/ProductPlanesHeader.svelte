@@ -1,5 +1,7 @@
 <script lang="ts">
     export let openTransactions: Function;
+    export let filterData: Function;
+    let searchTerm: string = "";
 </script>
 
 <head>
@@ -10,7 +12,7 @@
     <div class="header">
         <div class="left-side">
             <div class="search-bar">
-                <input type="text" placeholder="Search..." />
+                <input type="text" placeholder="Search..." bind:value={searchTerm} on:input={filterData(searchTerm)}/>
             </div>
         </div>
         <div class="right-side">

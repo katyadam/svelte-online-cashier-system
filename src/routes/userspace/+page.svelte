@@ -8,11 +8,12 @@
 	import TransactionsTable from "$lib/components/TransactionsTable.svelte";
 	import { getProductsPlanes } from "$lib/services/ProductPlaneService";
 
-    let apiData: ProductPlane[] | null = null;
-  
+    let productPlanes: ProductPlane[] | null = null;
+	let initialProductPlanes: ProductPlane[];	
     onMount(async () => {
       try {
-			apiData = await getProductsPlanes(1);			
+			productPlanes = await getProductsPlanes(1);
+			initialProductPlanes = productPlanes;		
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -34,13 +35,23 @@
 		showTransactions = false;
 	}
 
+	const filterData = async (searchTerm: string) => {
+		let filtered: ProductPlane[] = [];
+		initialProductPlanes?.forEach(pp => {
+			if (pp.name.toLocaleLowerCase().startsWith(searchTerm.toLocaleLowerCase())) {
+				filtered.push(pp)
+			}
+		});
+		productPlanes = filtered;
+	}
+
 </script>
   
 <main>
-	<ProductPlanesHeader openTransactions={openTransactions}/>
-    {#if apiData}
+	<ProductPlanesHeader openTransactions={openTransactions} filterData={filterData} />
+    {#if productPlanes}
         <div class="grid-container">
-            {#each apiData.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
+            {#each productPlanes.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
                 <a href="/userspace/{item.id}" class="button">
                   <ProductPlaneCard productPlane={item}/>
 				</a>

@@ -12,7 +12,7 @@
   
     onMount(async () => {
       try {
-			apiData = await getProductsPlanes(1);
+			apiData = await getProductsPlanes(1);			
       } catch (error) {
         console.error("Error fetching data: ", error);
       }

@@ -1,4 +1,4 @@
-import type { Product, ProductDto } from "$lib/interfaces/Product";
+import type { ProductDto } from "$lib/interfaces/Product";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const createProduct = async (productDto: ProductDto) => {

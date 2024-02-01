@@ -128,6 +128,7 @@
 			<EditForm closeEditForm={closeEditForm} product={productToEdit}/>
 		</div>
 	{/if}
+	
 	{#if showShopPanel}
 		<button class="shop-panel-overlay" on:click={closeShopPanel}></button>
 		<div class="shop-panel">

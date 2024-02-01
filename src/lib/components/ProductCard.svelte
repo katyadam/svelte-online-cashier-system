@@ -19,6 +19,7 @@
     <div class="card-content">
 		<h2>{product ? product.name : "+"}</h2>
 		<h3>{product ? `Price: ${product.price}` : ""}</h3>
+		<h3>{product ? `Currency: ${product.currency}` : ""}</h3>
     </div>
 </div>
 

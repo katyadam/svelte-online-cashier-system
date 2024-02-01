@@ -1,5 +1,20 @@
-import type { ProductPlaneDto } from "$lib/interfaces/ProductPlane";
+import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
 const apiUrl = import.meta.env.VITE_API_URL;
+
+interface ProductPlanesResponse {
+	content: ProductPlane[];
+  }
+
+export const getProductsPlanes = async (userId: number): Promise<ProductPlane[]> => {
+	const response = await fetch(`${apiUrl}/product-planes`);
+	const result: ProductPlanesResponse = await response.json();
+	return result.content;
+}
+
+export const getProductPlane =async (productPlaneId: string): Promise<ProductPlane> => {
+    const response = await fetch(`${apiUrl}/product-planes/${productPlaneId}`);
+    return response.json();
+}
 
 export const createProductPlane = async (productPlaneDto: ProductPlaneDto) => {
     const response = await fetch(`${apiUrl}/product-planes`, {

@@ -6,18 +6,13 @@
 	import Loading from "$lib/components/Loading.svelte";
     import ProductPlaneCreateForm from "$lib/components/crud/ProductPlaneCreateForm.svelte";
 	import TransactionsTable from "$lib/components/TransactionsTable.svelte";
+	import { getProductsPlanes } from "$lib/services/ProductPlaneService";
 
-    interface ApiResponse {
-      content: ProductPlane[];
-    }
-  
     let apiData: ProductPlane[] | null = null;
   
     onMount(async () => {
       try {
-        const response = await fetch("http://localhost:8080/product-planes");
-        const result: ApiResponse = await response.json();
-        apiData = result.content;
+			apiData = await getProductsPlanes(1);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }

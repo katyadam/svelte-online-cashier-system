@@ -9,13 +9,13 @@
     import Loading from "$lib/components/Loading.svelte";
 	import AddForm from "$lib/components/crud/ProductCreateForm.svelte";
 	import EditForm from "$lib/components/crud/ProductEditForm.svelte"
+	import { getProductPlane } from "$lib/services/ProductPlaneService";
 
 	let productPlane: ProductPlane | undefined;
 
 	onMount(async () => {
 		try {
-			const response = await fetch(`http://localhost:8080/product-planes/${$page.params.productPlane}`);
-			productPlane = await response.json();;
+			productPlane = await getProductPlane($page.params.productPlane);
 		} catch (error) {
 			console.log(error)
 		}

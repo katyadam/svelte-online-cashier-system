@@ -30,7 +30,6 @@
       <input type="text" id="name" bind:value={name} required />
       <input type="number" id="price" bind:value={price} required />
 
-      
       <button type="submit">Edit</button>
     </form>
   </div>

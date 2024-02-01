@@ -1,5 +1,3 @@
-import type { Product } from "./Product";
-
 export interface Transaction {
     id: number;
     record: string;

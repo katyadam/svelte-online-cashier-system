@@ -1,8 +1,4 @@
 <script>
-    let loginClicked = () => {
-      console.log('Button 1 clicked');
-      // Add your logic for button 1 click event
-    };
 </script>
   
 <style>

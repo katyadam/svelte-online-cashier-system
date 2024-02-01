@@ -13,7 +13,7 @@
 
 	let productPlane: ProductPlane | null = null;
 	let products: Product[] | null = null;
-	let initialProducts: Product[];
+	let initialProducts: Product[] | null = null;
 
 	onMount(async () => {
 		try {

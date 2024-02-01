@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createTransaction } from "$lib/api";
+    import { createTransaction } from "$lib/services/TransactionService";
     import type { Product } from "$lib/interfaces/Product";
     import type { TransactionDto } from "$lib/interfaces/Transaction";
     import ShopPanelCard from "./ShopPanelCard.svelte";

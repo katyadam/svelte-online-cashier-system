@@ -1,6 +1,6 @@
 <!-- FormComponent.svelte -->
 <script lang="ts">
-    import { createProductPlane } from "$lib/api";
+    import { createProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlaneDto } from "$lib/interfaces/ProductPlane";
 	  export let closeForm: Function;
     let name = "";

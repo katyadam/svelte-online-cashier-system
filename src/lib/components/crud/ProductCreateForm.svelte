@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { createProduct } from "$lib/api";
+    import { createProduct } from "$lib/services/ProductService";
     import type { ProductDto } from "$lib/interfaces/Product";
 
     export let closeForm: Function;

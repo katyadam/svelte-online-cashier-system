@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { deleteProductPlane, updateProductPlane } from "$lib/api";
+    import { deleteProductPlane, updateProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
 
     export let productPlane: ProductPlane | null;

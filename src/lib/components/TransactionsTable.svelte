@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getUserTransactions } from "$lib/api";
+    import { getUserTransactions } from "$lib/services/TransactionService";
     import type { Transaction } from "$lib/interfaces/Transaction";
     import { onMount } from "svelte";
     import TransactionCard from "./TransactionCard.svelte";

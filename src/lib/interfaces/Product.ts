@@ -9,3 +9,4 @@ export interface ProductDto {
     productPlaneId: number;
     price: number;
 }
+

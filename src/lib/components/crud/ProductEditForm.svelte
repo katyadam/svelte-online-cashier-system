@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { updateProduct } from "$lib/api";
+    import { updateProduct } from "$lib/services/ProductService";
     import type { ProductDto, Product } from "$lib/interfaces/Product";
 
     export let closeEditForm: Function;

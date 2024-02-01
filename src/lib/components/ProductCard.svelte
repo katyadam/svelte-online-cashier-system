@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { deleteProduct } from "$lib/api";
+    import { deleteProduct } from "$lib/services/ProductService";
     import type { Product } from "$lib/interfaces/Product";
 
     export let product: Product | null;

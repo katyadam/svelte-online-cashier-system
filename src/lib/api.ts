@@ -2,7 +2,7 @@ import type { ProductPlaneDto } from "./interfaces/ProductPlane";
 import type { ProductDto } from "./interfaces/Product";
 import type { TransactionDto, Transaction } from "./interfaces/Transaction";
 
-const apiUrl = 'http://localhost:8080';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const createProductPlane = async (productPlaneDto: ProductPlaneDto) => {
   const response = await fetch(`${apiUrl}/product-planes`, {

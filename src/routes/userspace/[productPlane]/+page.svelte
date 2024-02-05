@@ -10,6 +10,8 @@
 	import AddForm from "$lib/components/crud/ProductCreateForm.svelte";
 	import EditForm from "$lib/components/crud/ProductEditForm.svelte"
 	import { getProductPlane } from "$lib/services/ProductPlaneService";
+    import { storeCurrencyRates, storeSelectedCurrency } from "../../../store";
+    import { getRatesList } from "$lib/api";
 
 	let productPlane: ProductPlane | null = null;
 	let products: Product[] | null = null;
@@ -54,14 +56,12 @@
 	}
 	
 	let shopProducts: Map<Product, number> = new Map();
-	let totalPrice: number = 0;
 	let totalCount: number = 0;
 	const removeProduct = (id: number) => {
 		let newShopProducts = shopProducts;
 		for (const [product, amount] of newShopProducts) {
 			if (product.id === id) {
 				newShopProducts.delete(product);
-				totalPrice -= amount * product.price;
 				totalCount -= amount;
 				break;
 			}
@@ -81,7 +81,6 @@
 		} else {
 			shopProducts.set(product, 1);
 		}
-		totalPrice += product.price;
 		totalCount += 1
 	}
 	const decrProduct = (product: Product) => {
@@ -96,7 +95,6 @@
 			}
 		}
 		shopProducts = newShopProducts;
-		totalPrice -= product.price;
 		totalCount -= 1;
 	}
 
@@ -111,11 +109,11 @@
 	}
 
 
-	let selectedCurrency: string = "CZK";
-	const setCurrency = (currency: string) => {
-		selectedCurrency = currency;
+	const setCurrency = async (currency: string) => {
+		$storeSelectedCurrency = currency;
+		$storeCurrencyRates = await getRatesList(currency);
 	}
-
+	setCurrency("CZK");
 </script>
 
 <main>
@@ -130,11 +128,11 @@
         <div class="grid-container">
             {#each products.sort((a, b) => a.name.localeCompare(b.name)) as product (product.name)}
 				<button class="button" on:click={() => addProduct(product)}>
-					<ProductCard product={product} openEditForm={openEditForm} selectedCurrency={selectedCurrency}/>
+					<ProductCard product={product} openEditForm={openEditForm}/>
 				</button>
             {/each}
 			<button class="button" on:click={openForm}>
-				<ProductCard product={null} openEditForm={openEditForm} selectedCurrency={selectedCurrency}/>
+				<ProductCard product={null} openEditForm={openEditForm}/>
 			</button>
         </div>
     {:else}
@@ -163,7 +161,6 @@
 				removeProduct={removeProduct}
 				addProduct={addProduct}
 				decrProduct={decrProduct}
-				totalPrice={totalPrice}
         />
 		</div>
 	{/if}

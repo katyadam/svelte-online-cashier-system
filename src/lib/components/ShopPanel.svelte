@@ -3,13 +3,14 @@
     import type { Product } from "$lib/interfaces/Product";
     import type { TransactionDto } from "$lib/interfaces/Transaction";
     import ShopPanelCard from "./ShopPanelCard.svelte";
+    import { storeCurrencyRates, storeSelectedCurrency } from "../../store";
+    import { afterUpdate } from "svelte";
 
     export let shopProducts: Map<Product, number>;
     export let removeProduct: Function;
     export let addProduct: Function;
     export let decrProduct: Function;
 
-    export let totalPrice: number;
 
     const createRecord = (): string => {
         const jsonObject: { [key: string]: number } = {};
@@ -33,6 +34,20 @@
         createTransaction(transactionDto);
         location.reload();
     }
+    
+    let totalPrice: number = 0;
+    const countTotalPrice = (): void => {
+        totalPrice = 0;
+        for (const [product, amount] of shopProducts) {
+            if (product.currency == $storeSelectedCurrency) {
+                totalPrice += product.price * amount;
+            } else {
+                totalPrice += (product.price * amount) / $storeCurrencyRates[product.currency]
+            }
+        }
+    }
+
+    afterUpdate(() => countTotalPrice())
 
 </script>
 
@@ -42,7 +57,7 @@
 
 <div>
     <div class="top-bar">
-        <span>Total price: {totalPrice}</span>
+        <span>Total price: {Math.trunc((totalPrice) * 100) / 100} {$storeSelectedCurrency}</span>
         <button on:click={handleProceed}>
             <span>Proceed</span>
             <span class="material-icons">arrow_forward</span>

@@ -1,11 +1,27 @@
 <script lang="ts">
     import type { Product } from "$lib/interfaces/Product";
+    import { afterUpdate, onMount } from "svelte";
+    import { storeCurrencyRates, storeSelectedCurrency } from "../../store";
 
     export let removeProduct: Function;
     export let addProduct: Function;
     export let decrProduct: Function;
     export let product: Product;
     export let amount: number;
+
+    let currencyRate: number;
+	const setCurrencyRate = () => {
+		if (product != null) {
+            if (product.currency == $storeSelectedCurrency) {
+                currencyRate = 1;
+            } else {
+                currencyRate = $storeCurrencyRates[product.currency];
+            }
+		}
+	}
+
+    onMount(() => setCurrencyRate());
+
 </script>
 
 <head>
@@ -15,7 +31,7 @@
 <div class="card-container">
     <div>
         <span>{product.name}</span>
-        <span>{product.price}</span>
+        <span>{Math.trunc((product.price / currencyRate) * 100) / 100} {$storeSelectedCurrency}</span>
         <span>{amount}x</span>
     </div>
     <div>

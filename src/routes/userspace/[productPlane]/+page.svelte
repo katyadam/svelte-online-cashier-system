@@ -110,6 +110,12 @@
 		products = filtered;
 	}
 
+
+	let selectedCurrency: string = "CZK";
+	const setCurrency = (currency: string) => {
+		selectedCurrency = currency;
+	}
+
 </script>
 
 <main>
@@ -118,16 +124,17 @@
 		openShopPanel={openShopPanel}
 		totalCount={totalCount}
 		filterData={filterData}
+		setCurrency={setCurrency}
 	/>
 	{#if products}
         <div class="grid-container">
             {#each products.sort((a, b) => a.name.localeCompare(b.name)) as product (product.name)}
 				<button class="button" on:click={() => addProduct(product)}>
-					<ProductCard product={product} openEditForm={openEditForm}/>
+					<ProductCard product={product} openEditForm={openEditForm} selectedCurrency={selectedCurrency}/>
 				</button>
             {/each}
 			<button class="button" on:click={openForm}>
-				<ProductCard product={null} openEditForm={openEditForm}/>
+				<ProductCard product={null} openEditForm={openEditForm} selectedCurrency={selectedCurrency}/>
 			</button>
         </div>
     {:else}

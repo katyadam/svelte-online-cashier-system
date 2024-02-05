@@ -1,10 +1,21 @@
 <script lang="ts">
+    import { getCurrencyList} from "$lib/api";
+    import { onMount } from "svelte";
+
     export let openShopPanel: Function | undefined;
     export let filterData: Function;
     export let entityName: String | undefined;
     export let totalCount: number;
+    export let setCurrency: Function;
 
     let searchTerm: string = "";
+    let currencyList: string[];
+    onMount(async () => {
+        currencyList = await getCurrencyList();
+    })
+
+    let selectedCurrency: String = "CZK";
+
 </script>
 
 <head>
@@ -19,12 +30,21 @@
             </div>
         </div>
         <div class="right-side">
+            {#if currencyList}
+                <select class="currency-list" id="currency" bind:value={selectedCurrency} on:change={setCurrency(selectedCurrency)}>
+                    {#each currencyList as currency (currency)}
+                        <option value={currency}>{currency}</option>
+                    {/each}
+                </select>
+            {/if}
             <span class="title">{entityName}</span>
             <button class="import-button material-icons" title="Import product planes" >cloud_upload</button>
             {#if openShopPanel != null}
                 <button class="import-button" title="checkout" on:click={() => openShopPanel ? openShopPanel() : undefined}>
                     <span class="material-icons">shopping_cart</span>
-                    <span class="item-count">{totalCount}</span>
+                    {#if totalCount > 0}
+                        <span class="item-count">{totalCount}</span>
+                    {/if}
                 </button>
             {/if}
         </div>
@@ -89,5 +109,12 @@
         border-radius: 60%;
         padding: 5px 8px;
         font-size: 12px;
+    }
+
+    .currency-list {
+        margin: 15px;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
     }
 </style>

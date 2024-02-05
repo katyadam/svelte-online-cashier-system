@@ -10,3 +10,15 @@ export const getCurrencyList = async () => {
     
     return Object.keys(result);
 }
+
+interface RatesList {
+    rates: {
+        [currency: string]: number
+    }
+}
+export const getRatesList = async (from: string) => {
+    const response = await fetch(`https://api.frankfurter.app/latest?from=${from}`);
+    const result: RatesList = await response.json();
+    
+    return result.rates;
+}

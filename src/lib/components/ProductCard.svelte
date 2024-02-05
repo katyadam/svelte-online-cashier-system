@@ -1,14 +1,30 @@
 <script lang="ts">
     import { deleteProduct } from "$lib/services/ProductService";
     import type { Product } from "$lib/interfaces/Product";
+    import { getRatesList } from "$lib/api";
+    import { afterUpdate, onMount } from "svelte";
 
     export let product: Product | null;
     export let openEditForm: Function;
+	export let selectedCurrency: string;
 
-    const handleDelete = () => {
+	let currencyRates: {[currency: string]: number} | null;
+    let currencyRate: number;
+	const handleDelete = () => {
 		deleteProduct(product?.id);
 		location.reload()
     }
+	
+	const setCurrencyRate = async (currency: string) => {
+		currencyRates = await getRatesList(currency);
+		if (product != null) {
+			currencyRate = currencyRates[product.currency];
+		}
+	}
+
+	onMount(async () => setCurrencyRate(selectedCurrency));
+	afterUpdate(async () => setCurrencyRate(selectedCurrency));
+
 </script>
 
 <div class="product-card">
@@ -18,8 +34,12 @@
     {/if}
     <div class="card-content">
 		<h2>{product ? product.name : "+"}</h2>
-		<h3>{product ? `Price: ${product.price}` : ""}</h3>
-		<h3>{product ? `Currency: ${product.currency}` : ""}</h3>
+		<h3>{product ? 
+			`Price: ${currencyRate != undefined 
+					? Math.trunc((product.price / currencyRate) * 100) / 100
+				: product.price} ${selectedCurrency}` 
+			: ""}</h3>
+		<h3>{product ? `Initial currency: ${product.currency}` : ""}</h3>
     </div>
 </div>
 

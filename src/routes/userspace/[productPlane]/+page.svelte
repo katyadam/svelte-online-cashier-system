@@ -13,7 +13,7 @@
     import { storeCurrencyRates, storeSelectedCurrency } from "../../../store";
     import { getRatesList } from "$lib/api";
 
-	let productPlane: ProductPlane | null = null;
+	let productPlane: ProductPlane;
 	let products: Product[] | null = null;
 	let initialProducts: Product[] | null = null;
 
@@ -118,12 +118,11 @@
 
 <main>
 	<ProductsHeader	
-		entityName={productPlane?.name}
+		productPlane={productPlane}
 		openShopPanel={openShopPanel}
 		totalCount={totalCount}
 		filterData={filterData}
 		setCurrency={setCurrency}
-		productPlaneId={productPlane?.id}
 	/>
 	{#if products}
         <div class="grid-container">

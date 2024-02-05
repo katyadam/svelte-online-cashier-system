@@ -2,13 +2,14 @@
     import { getCurrencyList} from "$lib/api";
     import { onMount } from "svelte";
     import ImportForm from "./ImportForm.svelte";
+    import { updateProductPlane } from "$lib/services/ProductPlaneService";
+    import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
 
     export let openShopPanel: Function | undefined;
     export let filterData: Function;
-    export let entityName: String | undefined;
+    export let productPlane: ProductPlane;
     export let totalCount: number;
     export let setCurrency: Function;
-    export let productPlaneId: number | undefined;
 
     let searchTerm: string = "";
     let currencyList: string[];
@@ -22,6 +23,22 @@
 
     const openFilesForm = () => showFilesForm = true;
     const closeFilesForm = () => showFilesForm = false;
+
+    let editMode = false;
+    const openEditMode = () => {
+        editMode = true;
+    }
+
+    const editName = async () => {
+        if (productPlane) {
+                const updatedProductPlane: ProductPlaneDto = {
+                name: productPlane.name,
+                userId: 1 // TODO
+            }
+            updateProductPlane(productPlane?.id, updatedProductPlane);
+        }
+        editMode = false;
+    }
 
 </script>
 
@@ -49,7 +66,16 @@
                     {/each}
                 </select>
             {/if}
-            <span class="title">{entityName}</span>
+            {#if productPlane}
+                {#if editMode}
+                    <form class="edit-form" on:submit={editName}>
+                        <input type="text" bind:value={productPlane.name}>
+                        <button class="material-icons">done</button>
+                    </form>
+                {:else}
+                    <button class="title" on:dblclick={openEditMode}>{productPlane.name}</button>
+                {/if}
+            {/if}
             <button class="import-button material-icons" title="Import products" on:click={openFilesForm} >cloud_upload</button>
             {#if openShopPanel != null}
                 <button class="import-button" title="checkout" on:click={() => openShopPanel ? openShopPanel() : undefined}>
@@ -63,7 +89,7 @@
             {#if showFilesForm}
                 <button class="file-form-overlay" on:click={closeFilesForm}></button>
                 <div class="file-form">
-                    <ImportForm productPlaneId={productPlaneId}/>
+                    <ImportForm productPlaneId={productPlane?.id}/>
                 </div>
             {/if}
         </div>
@@ -85,9 +111,14 @@
     }
 
     .title {
+        min-width: 80px;
         font-size: 20px;
         text-decoration: none;
         margin-right: 10px;
+        border: none;
+        text-decoration: none;
+        background: none;
+        cursor: text;
     }
 
     .right-side {
@@ -157,4 +188,22 @@
 		background-color: rgba(186, 186, 186, 0.5);
 		z-index: 999;
 	}
+
+    .edit-form {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .edit-form button {
+        border: none;
+        background-color: #55fb1e;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        color: white;
+        border-radius: 50%;
+        padding: 5px;
+    }
+    .edit-form button:hover {
+        background-color: #5cd41b;
+    }
 </style>

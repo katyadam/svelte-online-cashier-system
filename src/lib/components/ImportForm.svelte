@@ -37,7 +37,7 @@
     }
   
     .import-button {
-        background-color: #3498db;
+        background-color: #007bff;
         color: #fff;
         padding: 10px;
         border: none;
@@ -45,6 +45,6 @@
     }
   
     .import-button:hover {
-        background-color: #2980b9;
+        background-color: #0056b3;
     }
 </style>

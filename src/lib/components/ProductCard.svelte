@@ -94,7 +94,7 @@
 		color: #fff;
 		padding: 10px;
 		border: none;
-		border-radius: 50%; /* Make the button circular */
+		border-radius: 50%;
 		cursor: pointer;
 		transition: background-color 0.3s ease;
 		display: flex;

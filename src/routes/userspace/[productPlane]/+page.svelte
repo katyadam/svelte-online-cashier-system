@@ -123,10 +123,11 @@
 		totalCount={totalCount}
 		filterData={filterData}
 		setCurrency={setCurrency}
+		productPlaneId={productPlane?.id}
 	/>
 	{#if products}
         <div class="grid-container">
-            {#each products.sort((a, b) => a.name.localeCompare(b.name)) as product (product.name)}
+            {#each products.sort((a, b) => a.name.localeCompare(b.name)) as product (product.id)}
 				<button class="button" on:click={() => addProduct(product)}>
 					<ProductCard product={product} openEditForm={openEditForm}/>
 				</button>

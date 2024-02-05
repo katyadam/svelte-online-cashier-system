@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Product } from "$lib/interfaces/Product";
-    import { afterUpdate, onMount } from "svelte";
+    import { onMount } from "svelte";
     import { storeCurrencyRates, storeSelectedCurrency } from "../../store";
 
     export let removeProduct: Function;

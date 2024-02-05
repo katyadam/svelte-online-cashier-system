@@ -17,8 +17,7 @@
         </div>
         <div class="right-side">
             <span class="title">Product planes</span>
-            <button class="btn material-icons" title="Open transactions" >cloud_upload</button>
-            <button class="btn material-icons" title="Import product planes" on:click={() => openTransactions()}>
+            <button class="btn material-icons" title="Open transactions" on:click={() => openTransactions()}>
                 list_alt
             </button>
         </div>

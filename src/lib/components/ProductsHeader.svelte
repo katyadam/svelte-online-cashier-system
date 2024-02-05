@@ -1,12 +1,14 @@
 <script lang="ts">
     import { getCurrencyList} from "$lib/api";
     import { onMount } from "svelte";
+    import ImportForm from "./ImportForm.svelte";
 
     export let openShopPanel: Function | undefined;
     export let filterData: Function;
     export let entityName: String | undefined;
     export let totalCount: number;
     export let setCurrency: Function;
+    export let productPlaneId: number | undefined;
 
     let searchTerm: string = "";
     let currencyList: string[];
@@ -15,6 +17,11 @@
     })
 
     let selectedCurrency: String = "CZK";
+
+    let showFilesForm = false;
+
+    const openFilesForm = () => showFilesForm = true;
+    const closeFilesForm = () => showFilesForm = false;
 
 </script>
 
@@ -31,14 +38,19 @@
         </div>
         <div class="right-side">
             {#if currencyList}
-                <select class="currency-list" id="currency" bind:value={selectedCurrency} on:change={setCurrency(selectedCurrency)}>
+                <select
+                    class="currency-list"
+                    id="currency" 
+                    bind:value={selectedCurrency}
+                    on:change={setCurrency(selectedCurrency)}
+                >
                     {#each currencyList as currency (currency)}
                         <option value={currency}>{currency}</option>
                     {/each}
                 </select>
             {/if}
             <span class="title">{entityName}</span>
-            <button class="import-button material-icons" title="Import product planes" >cloud_upload</button>
+            <button class="import-button material-icons" title="Import products" on:click={openFilesForm} >cloud_upload</button>
             {#if openShopPanel != null}
                 <button class="import-button" title="checkout" on:click={() => openShopPanel ? openShopPanel() : undefined}>
                     <span class="material-icons">shopping_cart</span>
@@ -46,6 +58,13 @@
                         <span class="item-count">{totalCount}</span>
                     {/if}
                 </button>
+            {/if}
+
+            {#if showFilesForm}
+                <button class="file-form-overlay" on:click={closeFilesForm}></button>
+                <div class="file-form">
+                    <ImportForm productPlaneId={productPlaneId}/>
+                </div>
             {/if}
         </div>
     </div>
@@ -117,4 +136,25 @@
         font-size: 20px;
         cursor: pointer;
     }
+
+    .file-form {
+        position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: white;
+		padding: 20px;
+		border: 1px solid #ccc;
+		z-index: 1000;
+    }
+
+	.file-form-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(186, 186, 186, 0.5);
+		z-index: 999;
+	}
 </style>

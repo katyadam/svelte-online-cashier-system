@@ -22,3 +22,15 @@ export const getRatesList = async (from: string) => {
     
     return result.rates;
 }
+
+export const importProducts = async (event: Event, productPlaneId: number, files: FileList) => {
+    event.preventDefault()
+
+    const formData = new FormData();
+    formData.append('file', files[0]);
+
+    const response = await fetch(`${apiUrl}/products/upload/${productPlaneId}`, {
+        method: 'POST',
+        body: formData,
+    });
+}

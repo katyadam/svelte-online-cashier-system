@@ -1,4 +1,4 @@
-const apiUrl = import.meta.env.VITE_API_URL_PROD;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 interface CurrencyResponse {
     [code: string]: string

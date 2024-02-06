@@ -1,5 +1,5 @@
 import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
-const apiUrl = import.meta.env.VITE_API_URL_PROD;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 export const getProductsPlanes = async (userId: number): Promise<ProductPlane[]> => {

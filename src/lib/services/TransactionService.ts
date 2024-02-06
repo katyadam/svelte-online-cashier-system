@@ -1,5 +1,5 @@
 import type { Transaction, TransactionDto } from "$lib/interfaces/Transaction";
-const apiUrl = import.meta.env.VITE_API_URL_PROD;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const createTransaction = async (transactionDto: TransactionDto) => {
 	

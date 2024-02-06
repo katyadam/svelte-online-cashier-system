@@ -1,5 +1,5 @@
 import type { ProductDto } from "$lib/interfaces/Product";
-const apiUrl = import.meta.env.VITE_API_URL_PROD;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const createProduct = async (productDto: ProductDto) => {
     const response = await fetch(`${apiUrl}/products`, {

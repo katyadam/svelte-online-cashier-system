@@ -15,6 +15,9 @@
     const createRecord = (): string => {
         const jsonObject: { [key: string]: number } = {};
         for (const [product, amount] of shopProducts) {
+            if (product.currency != "CZK") {
+                product.price /= $storeCurrencyRates[product.currency];
+            }
             const productKey = JSON.stringify(product);
             jsonObject[productKey] = amount;
         }

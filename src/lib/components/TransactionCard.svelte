@@ -18,7 +18,7 @@
   
 <div class="card">
     <div class="tx-info">
-        <p>{`Total cost: ${totalCost} CZK`}</p>
+        <p>{`Total cost: ${Math.trunc(totalCost * 100) / 100} CZK`}</p>
         <p>{`Time: ${txDate.toLocaleTimeString()} | Date: ${txDate.toLocaleDateString()}`}</p>            
     </div>
     <table>
@@ -33,7 +33,7 @@
         {#each Array.from(shopProducts.entries()) as [product, amount] (product)}
             <tr class="list-item">
                 <td>{product.name}</td>
-                <td>{product.price} CZK</td>
+                <td>{Math.trunc(product.price * 100) / 100} CZK</td>
                 <td>{amount}x</td>
             </tr>
         {/each}

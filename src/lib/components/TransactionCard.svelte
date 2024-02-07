@@ -6,19 +6,23 @@
     let txDate: Date = new Date(transaction.creationTime);
     let shopProducts = new Map<Product, number>();
     let totalCost: number = 0;
+    let currencyToShow: string;
 
     const jsonObject: { [key: string]: number } = JSON.parse(transaction.record);
     for (const [productJson, amount] of Object.entries(jsonObject)) {
         const product: Product = JSON.parse(productJson);
         shopProducts.set(product, amount);
         totalCost += product.price * amount;
+        currencyToShow = product.currency;
     }
+    console.log(transaction.creationTime);
+    
 </script>
 
   
 <div class="card">
     <div class="tx-info">
-        <p>{`Total cost: ${Math.trunc(totalCost * 100) / 100} CZK`}</p>
+        <p>{`Total cost: ${Math.trunc(totalCost * 100) / 100} ${currencyToShow}`}</p>
         <p>{`Time: ${txDate.toLocaleTimeString()} | Date: ${txDate.toLocaleDateString()}`}</p>            
     </div>
     <table>
@@ -33,7 +37,7 @@
         {#each Array.from(shopProducts.entries()) as [product, amount] (product)}
             <tr class="list-item">
                 <td>{product.name}</td>
-                <td>{Math.trunc(product.price * 100) / 100} CZK</td>
+                <td>{Math.trunc(product.price * 100) / 100} {currencyToShow}</td>
                 <td>{amount}x</td>
             </tr>
         {/each}

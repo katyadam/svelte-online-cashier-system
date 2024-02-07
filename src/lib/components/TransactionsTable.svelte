@@ -23,7 +23,7 @@
 <div class="transactions-box">
     <h2>Completed transactions</h2>
     {#if txs}
-        {#each txs as tx (tx.id)}
+        {#each txs.sort((a, b) => b.creationTime - a.creationTime) as tx (tx.id)}
             <div>
                 <TransactionCard transaction={tx}/>
             </div>

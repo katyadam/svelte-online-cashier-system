@@ -206,4 +206,12 @@
     .edit-form button:hover {
         background-color: #5cd41b;
     }
+
+    @media (max-width: 768px) {
+        .header {
+			display: flex;
+			flex-direction: column;
+            width: 100%;
+		}
+    }
 </style>

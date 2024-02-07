@@ -140,6 +140,16 @@
 		background-color: rgba(186, 186, 186, 0.5);
 		z-index: 999;
 	}
+	@media (max-width: 768px) {
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
+
+        .form-container,
+        .txs-table {
+            width: 90%;
+        }
+    }
 
 </style>
   

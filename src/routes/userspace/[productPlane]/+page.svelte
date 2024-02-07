@@ -3,7 +3,7 @@
     import type { Product } from "$lib/interfaces/Product";
 	import { page } from "$app/stores";
     import { onMount } from "svelte";
-    import ProductsHeader from "$lib/components/headers/ProductsHeader.svelte";
+    import ProductsHeader from "$lib/components/headers/products/ProductsHeader.svelte";
 	import ShopPanel from "$lib/components/ShopPanel.svelte";
 	import ProductCard from "$lib/components/ProductCard.svelte";
     import Loading from "$lib/components/Loading.svelte";
@@ -109,11 +109,7 @@
 	}
 
 
-	const setCurrency = async (currency: string) => {
-		$storeSelectedCurrency = currency;
-		$storeCurrencyRates = await getRatesList(currency);
-	}
-	setCurrency("CZK");
+
 </script>
 
 <main>
@@ -122,7 +118,6 @@
 		openShopPanel={openShopPanel}
 		totalCount={totalCount}
 		filterData={filterData}
-		setCurrency={setCurrency}
 	/>
 	{#if products}
         <div class="grid-container">

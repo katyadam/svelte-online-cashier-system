@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { getCurrencyList} from "$lib/api";
-    import { onMount } from "svelte";
-    import ImportForm from "../ImportForm.svelte";
+    import ImportForm from "../../ImportForm.svelte";
+    import CurrencySelect from "./CurrencySelect.svelte";
     import { updateProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
 
@@ -9,15 +8,8 @@
     export let filterData: Function;
     export let productPlane: ProductPlane;
     export let totalCount: number;
-    export let setCurrency: Function;
 
     let searchTerm: string = "";
-    let currencyList: string[];
-    onMount(async () => {
-        currencyList = await getCurrencyList();
-    })
-
-    let selectedCurrency: String = "CZK";
 
     let showFilesForm = false;
 
@@ -55,18 +47,7 @@
             </div>
         </div>
         <div class="right-side">
-            {#if currencyList}
-                <select
-                    class="currency-list"
-                    id="currency" 
-                    bind:value={selectedCurrency}
-                    on:change={setCurrency(selectedCurrency)}
-                >
-                    {#each currencyList as currency (currency)}
-                        <option value={currency}>{currency}</option>
-                    {/each}
-                </select>
-            {/if}
+            <CurrencySelect />
             {#if productPlane}
                 {#if editMode}
                     <form class="edit-form" on:submit={editName}>
@@ -105,7 +86,7 @@
     }
 
     .left-side {
-        padding: 10px;
+        margin-left: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -123,7 +104,7 @@
     }
 
     .right-side {
-        padding: 10px;
+        padding: 15px;
         display: flex;
         align-items: center;
     }
@@ -161,13 +142,6 @@
         border-radius: 60%;
         padding: 5px 8px;
         font-size: 12px;
-    }
-
-    .currency-list {
-        margin: 15px;
-        border: none;
-        font-size: 20px;
-        cursor: pointer;
     }
 
     .file-form {

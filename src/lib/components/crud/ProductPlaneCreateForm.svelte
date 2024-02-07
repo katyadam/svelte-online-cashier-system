@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createProductPlane } from "$lib/services/ProductPlaneService";
 	import type { ProductPlaneDto } from "$lib/interfaces/ProductPlane";
+    import { showProductPlaneCreate } from "../../../store";
 	
-	export let closeForm: Function;
 	
 	let name = "";
 	const handleSubmit = () => {
@@ -13,7 +13,7 @@
 		
 		createProductPlane(productPlaneDto);
 		location.reload();
-		closeForm();
+		$showProductPlaneCreate = false;
 	};
 </script>
   

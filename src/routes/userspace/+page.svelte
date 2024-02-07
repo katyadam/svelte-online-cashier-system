@@ -7,6 +7,7 @@
     import ProductPlaneCreateForm from "$lib/components/crud/ProductPlaneCreateForm.svelte";
 	import TransactionsTable from "$lib/components/TransactionsTable.svelte";
 	import { getProductsPlanes } from "$lib/services/ProductPlaneService";
+    import { showProductPlaneCreate, showTransactions } from "../../store";
 
     let productPlanes: ProductPlane[] | null = null;
 	let initialProductPlanes: ProductPlane[];	
@@ -18,22 +19,6 @@
         console.error("Error fetching data: ", error);
       }
     });
-
-	let showCreateForm: boolean = false;
-	const openForm = () => {
-		showCreateForm = true;
-	}
-	const closeForm = () => {
-		showCreateForm = false;
-	}
-
-	let showTransactions: boolean = false;
-	const openTransactions = () => {
-		showTransactions = true;
-	}
-	const closeTransactions = () => {
-		showTransactions = false;
-	}
 
 	const filterData = async (searchTerm: string) => {
 		let filtered: ProductPlane[] = [];
@@ -48,7 +33,7 @@
 </script>
   
 <main>
-	<ProductPlanesHeader openTransactions={openTransactions} filterData={filterData} />
+	<ProductPlanesHeader openTransactions={() => {$showTransactions = true;}} filterData={filterData} />
     {#if productPlanes}
         <div class="grid-container">
             {#each productPlanes.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
@@ -56,7 +41,7 @@
                   <ProductPlaneCard productPlane={item}/>
 				</a>
             {/each}
-            <button class="button" on:click={openForm}>
+            <button class="button" on:click={() => {$showProductPlaneCreate = true;}}>
 				<ProductPlaneCard productPlane={null} />
 			</button>
         </div>
@@ -64,15 +49,15 @@
         <Loading />
     {/if}
 
-	{#if showCreateForm}
-		<button class="overlay" on:click={closeForm}></button>
+	{#if $showProductPlaneCreate}
+		<button class="overlay" on:click={() => {$showProductPlaneCreate = false;}}></button>
 		<div class="form-container">
-			<ProductPlaneCreateForm closeForm={closeForm} />
+			<ProductPlaneCreateForm />
 		</div>
 	{/if}
 
-	{#if showTransactions}
-		<button class="txs-table-overlay" on:click={closeTransactions}></button>
+	{#if $showTransactions}
+		<button class="txs-table-overlay" on:click={() => {$showTransactions = false;}}></button>
 		<div class="txs-table">
 			<TransactionsTable />
 		</div>

@@ -1,8 +1,8 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import ProductPlaneCard from "$lib/components/ProductPlaneCard.svelte";
     import type { ProductPlane } from "$lib/interfaces/ProductPlane";
     import ProductPlanesHeader from "$lib/components/headers/product-planes/ProductPlanesHeader.svelte";
+	import ProductPlanesGrid from "$lib/components/grids/ProductPlanesGrid.svelte";
 	import Loading from "$lib/components/Loading.svelte";
     import ProductPlaneCreateForm from "$lib/components/crud/ProductPlaneCreateForm.svelte";
 	import TransactionsTable from "$lib/components/TransactionsTable.svelte";
@@ -33,18 +33,9 @@
 </script>
   
 <main>
-	<ProductPlanesHeader openTransactions={() => {$showTransactions = true;}} filterData={filterData} />
+	<ProductPlanesHeader filterData={filterData} />
     {#if productPlanes}
-        <div class="grid-container">
-            {#each productPlanes.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
-                <a href="/userspace/{item.id}" class="button">
-                  <ProductPlaneCard productPlane={item}/>
-				</a>
-            {/each}
-            <button class="button" on:click={() => {$showProductPlaneCreate = true;}}>
-				<ProductPlaneCard productPlane={null} />
-			</button>
-        </div>
+		<ProductPlanesGrid productPlanes={productPlanes}/>
     {:else}
         <Loading />
     {/if}
@@ -67,20 +58,6 @@
 
 
 <style>
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-      gap: 20px;
-      max-height: 700px;
-      padding: 20px;
-    }
-
-	.button {
-		border: none;
-		background-color: white;
-		text-decoration: none;
-	}
-
 	.form-container {
 		position: fixed;
 		top: 50%;
@@ -126,10 +103,6 @@
 		z-index: 999;
 	}
 	@media (max-width: 768px) {
-        .grid-container {
-            grid-template-columns: 1fr;
-        }
-
         .form-container,
         .txs-table {
             width: 90%;

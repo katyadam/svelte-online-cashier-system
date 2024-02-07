@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { showTransactions } from "../../../../store";
     import SearchBar from "../SearchBar.svelte";
 
-    export let openTransactions: Function;
     export let filterData: Function;
 </script>
 
@@ -17,7 +17,7 @@
         </div>
         <div class="right-side">
             <span class="title">Product planes</span>
-            <button class="btn material-icons" title="Open transactions" on:click={() => openTransactions()}>
+            <button class="btn material-icons" title="Open transactions" on:click={() => {$showTransactions = true;}}>
                 list_alt
             </button>
         </div>

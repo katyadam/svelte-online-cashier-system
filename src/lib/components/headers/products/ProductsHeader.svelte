@@ -4,11 +4,10 @@
     import SearchBar from "../SearchBar.svelte";
     import { updateProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
+    import { showShopPanel, totalCount } from "../../../../store";
 
-    export let openShopPanel: Function | undefined;
     export let filterData: Function;
     export let productPlane: ProductPlane;
-    export let totalCount: number;
 
     let showFilesForm = false;
 
@@ -56,14 +55,12 @@
                 {/if}
             {/if}
             <button class="right-button material-icons" title="Import products" on:click={openFilesForm} >cloud_upload</button>
-            {#if openShopPanel != null}
-                <button class="right-button" title="checkout" on:click={() => openShopPanel ? openShopPanel() : undefined}>
-                    <span class="material-icons">shopping_cart</span>
-                    {#if totalCount > 0}
-                        <span class="item-count">{totalCount}</span>
-                    {/if}
-                </button>
-            {/if}
+            <button class="right-button" title="checkout" on:click={() => {$showShopPanel = true}}>
+                <span class="material-icons">shopping_cart</span>
+                {#if $totalCount > 0}
+                    <span class="item-count">{$totalCount}</span>
+                {/if}
+            </button>
 
             {#if showFilesForm}
                 <button class="file-form-overlay" on:click={closeFilesForm}></button>

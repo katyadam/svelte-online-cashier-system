@@ -4,8 +4,8 @@
     import type { ProductDto } from "$lib/interfaces/Product";
     import { getCurrencyList } from "$lib/api";
     import { onMount } from "svelte";
+    import { showProductCreate } from "../../../store";
 
-    export let closeForm: Function;
 	let selectedCurrency: string;
 
 	let currencyList: string[];
@@ -21,7 +21,7 @@
 		};
 		createProduct(productDto);
 		location.reload();
-		closeForm();
+		$showProductCreate = false;
     };
 	onMount(async () => {
 		currencyList = await getCurrencyList();		

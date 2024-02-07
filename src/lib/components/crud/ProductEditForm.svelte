@@ -4,10 +4,9 @@
     import type { ProductDto, Product } from "$lib/interfaces/Product";
 	import { getCurrencyList } from "$lib/api";
     import { onMount } from "svelte";
+    import { productToEdit, showProductEdit } from "../../../store";
 
-    export let closeEditForm: Function;
-    export let product: Product;
-
+	let product: Product = $productToEdit;
 	let currencyList: string[];
     let name: string = product?.name;
     let price: number = product?.price;
@@ -22,7 +21,7 @@
 		};
 		updateProduct(product?.id, productDto);
 		location.reload();
-		closeEditForm();
+		$showProductEdit = false;
     };
 
 	onMount(async () => {

@@ -55,8 +55,6 @@
 	{/if}
 </main>
 
-
-
 <style>
 	.form-container {
 		position: fixed;

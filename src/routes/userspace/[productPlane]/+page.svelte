@@ -10,8 +10,6 @@
 	import AddForm from "$lib/components/crud/ProductCreateForm.svelte";
 	import EditForm from "$lib/components/crud/ProductEditForm.svelte"
 	import { getProductPlane } from "$lib/services/ProductPlaneService";
-    import { storeCurrencyRates, storeSelectedCurrency } from "../../../store";
-    import { getRatesList } from "$lib/api";
 
 	let productPlane: ProductPlane;
 	let products: Product[] | null = null;

@@ -1,5 +1,4 @@
 <script>
-    import Header from "$lib/components/Header.svelte";
 </script>
 
 <svelte:head>

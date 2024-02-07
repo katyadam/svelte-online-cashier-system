@@ -1,6 +1,7 @@
 <script lang="ts">
     import ImportForm from "../../ImportForm.svelte";
     import CurrencySelect from "./CurrencySelect.svelte";
+    import SearchBar from "../SearchBar.svelte";
     import { updateProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
 
@@ -8,8 +9,6 @@
     export let filterData: Function;
     export let productPlane: ProductPlane;
     export let totalCount: number;
-
-    let searchTerm: string = "";
 
     let showFilesForm = false;
 
@@ -42,9 +41,7 @@
     <div class="header">
         <div class="left-side">
             <a class="left-btn material-icons" href="/userspace">arrow_back</a>
-            <div class="search-bar">
-                <input type="text" placeholder="Search..." bind:value={searchTerm} on:input={filterData(searchTerm)}/>
-            </div>
+            <SearchBar filterData={filterData}/>
         </div>
         <div class="right-side">
             <CurrencySelect />
@@ -107,15 +104,6 @@
         padding: 15px;
         display: flex;
         align-items: center;
-    }
-
-    .search-bar {
-        display: flex;
-        align-items: center;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 5px;
-        margin-right: 10px;
     }
 
     .import-button {

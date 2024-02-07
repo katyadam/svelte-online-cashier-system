@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import ProductPlaneCard from "$lib/components/ProductPlaneCard.svelte";
     import type { ProductPlane } from "$lib/interfaces/ProductPlane";
-    import ProductPlanesHeader from "$lib/components/headers/ProductPlanesHeader.svelte";
+    import ProductPlanesHeader from "$lib/components/headers/product-planes/ProductPlanesHeader.svelte";
 	import Loading from "$lib/components/Loading.svelte";
     import ProductPlaneCreateForm from "$lib/components/crud/ProductPlaneCreateForm.svelte";
 	import TransactionsTable from "$lib/components/TransactionsTable.svelte";

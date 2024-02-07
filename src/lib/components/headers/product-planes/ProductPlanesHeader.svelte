@@ -1,7 +1,8 @@
 <script lang="ts">
+    import SearchBar from "../SearchBar.svelte";
+
     export let openTransactions: Function;
     export let filterData: Function;
-    let searchTerm: string = "";
 </script>
 
 <head>
@@ -12,9 +13,7 @@
     <div class="header">
         <div class="left-side">
             <a class="left-btn material-icons" href="/">arrow_back</a>
-            <div class="search-bar">
-                <input type="text" placeholder="Search..." bind:value={searchTerm} on:input={filterData(searchTerm)}/>
-            </div>
+            <SearchBar filterData={filterData}/>
         </div>
         <div class="right-side">
             <span class="title">Product planes</span>
@@ -50,15 +49,6 @@
         align-items: center;
     }
 
-    .search-bar {
-        display: flex;
-        align-items: center;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 5px;
-        margin-right: 10px;
-    }
-
     .btn {
         cursor: pointer;
         margin-left: 10px;
@@ -75,12 +65,5 @@
         position: relative;
         text-decoration: none;
         font-size: 30px;
-    }
-
-    input {
-        border: none;
-        outline: none;
-        width: 200px;
-        padding: 5px;
     }
 </style>

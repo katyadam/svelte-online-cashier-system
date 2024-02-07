@@ -1,7 +1,7 @@
 <script lang="ts">
     import { getCurrencyList} from "$lib/api";
     import { onMount } from "svelte";
-    import ImportForm from "./ImportForm.svelte";
+    import ImportForm from "../ImportForm.svelte";
     import { updateProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
 
@@ -49,6 +49,7 @@
 <header>
     <div class="header">
         <div class="left-side">
+            <a class="left-btn material-icons" href="/userspace">arrow_back</a>
             <div class="search-bar">
                 <input type="text" placeholder="Search..." bind:value={searchTerm} on:input={filterData(searchTerm)}/>
             </div>
@@ -207,6 +208,16 @@
     .edit-form button:hover {
         background-color: #5cd41b;
     }
+
+    .left-btn {
+        cursor: pointer;
+        margin-right: 10px;
+        background: none;
+        border: none;
+        text-decoration: none;
+        font-size: 30px;
+    }
+
 
     @media (max-width: 768px) {
         .header {

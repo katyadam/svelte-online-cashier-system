@@ -11,6 +11,7 @@
 <header>
     <div class="header">
         <div class="left-side">
+            <a class="left-btn material-icons" href="/">arrow_back</a>
             <div class="search-bar">
                 <input type="text" placeholder="Search..." bind:value={searchTerm} on:input={filterData(searchTerm)}/>
             </div>
@@ -64,6 +65,16 @@
         background: none;
         border: none;
         position: relative;
+    }
+
+    .left-btn {
+        cursor: pointer;
+        margin-right: 10px;
+        background: none;
+        border: none;
+        position: relative;
+        text-decoration: none;
+        font-size: 30px;
     }
 
     input {

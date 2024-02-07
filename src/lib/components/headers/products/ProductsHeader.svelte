@@ -55,9 +55,9 @@
                     <button class="title" on:dblclick={openEditMode}>{productPlane.name}</button>
                 {/if}
             {/if}
-            <button class="import-button material-icons" title="Import products" on:click={openFilesForm} >cloud_upload</button>
+            <button class="right-button material-icons" title="Import products" on:click={openFilesForm} >cloud_upload</button>
             {#if openShopPanel != null}
-                <button class="import-button" title="checkout" on:click={() => openShopPanel ? openShopPanel() : undefined}>
+                <button class="right-button" title="checkout" on:click={() => openShopPanel ? openShopPanel() : undefined}>
                     <span class="material-icons">shopping_cart</span>
                     {#if totalCount > 0}
                         <span class="item-count">{totalCount}</span>
@@ -106,7 +106,7 @@
         align-items: center;
     }
 
-    .import-button {
+    .right-button {
         cursor: pointer;
         margin-left: 10px;
         background: none;

@@ -1,13 +1,14 @@
 <script lang="ts">
     import { deleteProduct } from "$lib/services/ProductService";
     import type { Product } from "$lib/interfaces/Product";
-    import { afterUpdate, onMount } from "svelte";
+    import { afterUpdate } from "svelte";
     import { storeCurrencyRates, storeSelectedCurrency } from "../../store";
 
     export let product: Product | null;
     export let openEditForm: Function;
 
 	const handleDelete = () => {
+		event?.stopPropagation();
 		deleteProduct(product?.id);
 		location.reload()
     }
@@ -29,17 +30,17 @@
 </script>
 
 <div class="product-card">
-    {#if product != null}
+    {#if product}
 		<button class="remove-button material-icons" on:click={handleDelete}>delete</button>
 		<button class="edit-button material-icons" on:click={openEditForm(product)}>edit</button>
+		<div class="card-content">
+			<h2>{product.name}</h2>
+			<h3>{`Price: ${productPrice} ${$storeSelectedCurrency}`}</h3>
+			<h3>{`Initial currency: ${product.currency}`}</h3>
+		</div>
+	{:else}
+		<h2>+</h2>
     {/if}
-    <div class="card-content">
-		<h2>{product ? product.name : "+"}</h2>
-		<h3>{product ? 
-			`Price: ${productPrice} ${$storeSelectedCurrency}` 
-			: ""}</h3>
-		<h3>{product ? `Initial currency: ${product.currency}` : ""}</h3>
-    </div>
 </div>
 
 <style>
@@ -50,16 +51,15 @@
 		border-radius: 15px;
 		overflow: hidden;
 		display: flex;
-		flex-direction: column; /* Arrange child elements vertically */
-		justify-content: center; /* Center vertically */
-		align-items: center; /* Center horizontally */
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 		height: 200px;
 		margin-bottom: 10px;
 		cursor: pointer;
 		transition: box-shadow 0.3s ease;
 		min-width: 300px;
 		border: none;
-		position: relative;
 	}
 	.product-card:hover {
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -73,7 +73,7 @@
 		color: #fff;
 		padding: 10px;
 		border: none;
-		border-radius: 50%; /* Make the button circular */
+		border-radius: 50%;
 		cursor: pointer;
 		transition: background-color 0.3s ease;
 		display: flex;

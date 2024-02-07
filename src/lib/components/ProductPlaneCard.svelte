@@ -18,10 +18,13 @@
 <div class="product-card">
 	{#if productPlane != null}
 		<button class="remove-button material-icons" on:click={handleDelete}>delete</button>
+		<div class="card-content">
+			<h2>{productPlane.name}</h2>
+		</div>
+	{:else}
+		<h2>+</h2>
 	{/if}
-	<div class="card-content">
-		<h2>{productPlane ? productPlane.name : "+"}</h2>
-	</div>
+	
 </div>
 
 <style>
@@ -40,7 +43,6 @@
 		transition: box-shadow 0.3s ease;
 		min-width: 300px;
 		border: none;
-		position: relative;
 	}
 
 	.product-card:hover {

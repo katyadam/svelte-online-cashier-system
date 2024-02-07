@@ -15,7 +15,6 @@
         totalCost += product.price * amount;
         currencyToShow = product.currency;
     }
-    console.log(transaction.creationTime);
     
 </script>
 

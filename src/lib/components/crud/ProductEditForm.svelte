@@ -32,7 +32,7 @@
 
 
 <div>
-	<h2>Create new product</h2>
+	<h2>Edit product</h2>
 	<form on:submit|preventDefault={handleSubmit}>
 		<label for="name">Name:</label>
 		<input type="text" id="name" bind:value={name} required />
@@ -49,7 +49,7 @@
 			</select>
 		{/if}
 		
-		<button type="submit">Create</button>
+		<button type="submit">Edit</button>
 	</form>
 </div>
   

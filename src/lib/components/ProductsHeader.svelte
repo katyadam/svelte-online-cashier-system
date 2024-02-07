@@ -101,10 +101,10 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px;
     }
 
     .left-side {
+        padding: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -122,6 +122,7 @@
     }
 
     .right-side {
+        padding: 10px;
         display: flex;
         align-items: center;
     }
@@ -211,7 +212,6 @@
         .header {
 			display: flex;
 			flex-direction: column;
-            width: 100%;
 		}
     }
 </style>

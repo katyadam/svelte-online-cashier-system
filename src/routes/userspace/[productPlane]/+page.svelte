@@ -226,4 +226,18 @@
 		z-index: 999;
 	}
 
+	@media (max-width: 768px) {
+		main {
+			width: 100%;
+		}
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
+
+        .form-container,
+        .shop-panel {
+            width: 90%;
+        }
+    }
+
 </style>

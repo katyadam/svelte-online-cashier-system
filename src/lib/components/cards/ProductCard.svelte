@@ -2,7 +2,7 @@
     import { deleteProduct } from "$lib/services/ProductService";
     import type { Product } from "$lib/interfaces/Product";
     import { afterUpdate } from "svelte";
-    import { productToEdit, showProductEdit, storeCurrencyRates, storeSelectedCurrency } from "../../store";
+    import { productToEdit, showProductEdit, storeCurrencyRates, storeSelectedCurrency } from "../../../store";
 
     export let product: Product | null;
 

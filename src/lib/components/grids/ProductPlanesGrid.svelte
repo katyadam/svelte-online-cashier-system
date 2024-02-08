@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { ProductPlane } from "$lib/interfaces/ProductPlane";
-    import ProductPlaneCard from "$lib/components/ProductPlaneCard.svelte";
+    import ProductPlaneCard from "$lib/components/cards/ProductPlaneCard.svelte";
     import { showProductPlaneCreate } from "../../../store";
 
     export let productPlanes: ProductPlane[];

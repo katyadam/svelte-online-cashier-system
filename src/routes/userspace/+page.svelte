@@ -4,8 +4,8 @@
     import ProductPlanesHeader from "$lib/components/headers/product-planes/ProductPlanesHeader.svelte";
 	import ProductPlanesGrid from "$lib/components/grids/ProductPlanesGrid.svelte";
 	import Loading from "$lib/components/Loading.svelte";
-    import ProductPlaneCreateForm from "$lib/components/crud/ProductPlaneCreateForm.svelte";
-	import TransactionsTable from "$lib/components/TransactionsTable.svelte";
+    import ProductPlaneCreateForm from "$lib/components/panels/ProductPlaneCreateForm.svelte";
+	import TransactionsTable from "$lib/components/panels/TransactionsPanel.svelte";
 	import { getProductsPlanes } from "$lib/services/ProductPlaneService";
     import { showProductPlaneCreate, showTransactions } from "../../store";
 

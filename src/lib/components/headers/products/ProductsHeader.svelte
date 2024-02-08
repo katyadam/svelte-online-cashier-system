@@ -1,7 +1,8 @@
 <script lang="ts">
-    import ImportForm from "../../ImportForm.svelte";
+    import ImportForm from "../../panels/ImportForm.svelte";
     import CurrencySelect from "./CurrencySelect.svelte";
     import SearchBar from "../SearchBar.svelte";
+    import PriceFilter from "./PriceFilter.svelte";
     import { updateProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
     import { showShopPanel, totalCount } from "../../../../store";
@@ -41,6 +42,7 @@
         <div class="left-side">
             <a class="left-btn material-icons" href="/userspace">arrow_back</a>
             <SearchBar filterData={filterData}/>
+            <PriceFilter />
         </div>
         <div class="right-side">
             <CurrencySelect />

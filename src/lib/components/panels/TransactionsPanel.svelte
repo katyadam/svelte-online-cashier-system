@@ -2,7 +2,7 @@
     import { getUserTransactions } from "$lib/services/TransactionService";
     import type { Transaction } from "$lib/interfaces/Transaction";
     import { onMount } from "svelte";
-    import TransactionCard from "./TransactionCard.svelte";
+    import TransactionCard from "../cards/TransactionCard.svelte";
 
     let txs:  Transaction[];
 

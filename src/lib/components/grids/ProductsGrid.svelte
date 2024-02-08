@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Product } from "$lib/interfaces/Product";
     import { showProductCreate } from "../../../store";
-    import ProductCard from "../ProductCard.svelte";
+    import ProductCard from "../cards/ProductCard.svelte";
 
     export let addProduct: Function;
     export let products: Product[];

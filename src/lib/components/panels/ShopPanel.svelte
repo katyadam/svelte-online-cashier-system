@@ -1,9 +1,8 @@
 <script lang="ts">
     import { createTransaction } from "$lib/services/TransactionService";
-    import type { Product } from "$lib/interfaces/Product";
     import type { TransactionDto } from "$lib/interfaces/Transaction";
-    import ShopPanelCard from "./ShopPanelCard.svelte";
-    import { storeCurrencyRates, storeSelectedCurrency, shopProducts } from "../../store";
+    import ShopPanelCard from "../cards/ShopPanelCard.svelte";
+    import { storeCurrencyRates, storeSelectedCurrency, shopProducts } from "../../../store";
     import { afterUpdate } from "svelte";
 
     export let removeProduct: Function;

@@ -23,7 +23,8 @@
       <li>Each transaction is stored and can be listed afterwards.</li>
       <li>Product planes will be deleted each day at 3:00AM (CET). Transactions each hour.</li>
       <li>You can filter product planes and products.</li>
-      <li>Products can be imported via text file.</li>
+      <li>Products can be uploaded via text file.</li>
+      <li>Products can be downloaded as a text file with format: name,price,currency</li>
     </ul>
 
 </section>

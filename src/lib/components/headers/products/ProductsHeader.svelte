@@ -5,6 +5,7 @@
     import { updateProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
     import { showShopPanel, totalCount } from "../../../../store";
+    import { createDownloadContent, startDownload } from "$lib/services/Downloader";
 
     export let filterData: Function;
     export let productPlane: ProductPlane;
@@ -28,6 +29,10 @@
             updateProductPlane(productPlane?.id, updatedProductPlane);
         }
         editMode = false;
+    }
+
+    const handleDownload = () => {
+        startDownload(createDownloadContent(productPlane.productSet), "products");
     }
 
 </script>
@@ -54,7 +59,12 @@
                     <button class="title" on:dblclick={openEditMode}>{productPlane.name}</button>
                 {/if}
             {/if}
-            <button class="right-button material-icons" title="Import products" on:click={openFilesForm} >cloud_upload</button>
+            <button class="right-button material-icons" title="Upload new products" on:click={openFilesForm} >
+                upload
+            </button>
+            <button class="right-button material-icons" title="Download products" on:click={handleDownload} >
+                download
+            </button>
             <button class="right-button" title="checkout" on:click={() => {$showShopPanel = true}}>
                 <span class="material-icons">shopping_cart</span>
                 {#if $totalCount > 0}

@@ -3,12 +3,28 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 
 export const getProductsPlanes = async (userId: number): Promise<ProductPlane[]> => {
-	const response = await fetch(`${apiUrl}/users/${userId}/product-planes`);
+    
+	const response = await fetch(`${apiUrl}/users/${userId}/product-planes`, {
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lMUBnbWFpbC5jb20iLCJpYXQiOjE3MDc0ODA3MjYsImV4cCI6MTcwNzU2NzEyNn0.jJhBh9CwHu7Nk9m35iAS-jqHsGOvZnWR9YgL1CdWCm8",
+        },
+        credentials: "include"
+    });
+    
 	return response.json();
 }
 
 export const getProductPlane = async (productPlaneId: string): Promise<ProductPlane> => {
-    const response = await fetch(`${apiUrl}/product-planes/${productPlaneId}`);
+    const response = await fetch(`${apiUrl}/product-planes/${productPlaneId}`, {
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lMUBnbWFpbC5jb20iLCJpYXQiOjE3MDc0ODA3MjYsImV4cCI6MTcwNzU2NzEyNn0.jJhBh9CwHu7Nk9m35iAS-jqHsGOvZnWR9YgL1CdWCm8",
+        },
+        credentials: "include"
+    });
     return response.json();
 }
 
@@ -17,6 +33,7 @@ export const createProductPlane = async (productPlaneDto: ProductPlaneDto) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lMUBnbWFpbC5jb20iLCJpYXQiOjE3MDc0ODA3MjYsImV4cCI6MTcwNzU2NzEyNn0.jJhBh9CwHu7Nk9m35iAS-jqHsGOvZnWR9YgL1CdWCm8"
       },
       body: JSON.stringify(productPlaneDto),
     });
@@ -37,6 +54,7 @@ export const createProductPlane = async (productPlaneDto: ProductPlaneDto) => {
           method: "DELETE",
           headers: {
               "Content-Type": "application/json",
+              "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lMUBnbWFpbC5jb20iLCJpYXQiOjE3MDc0ODA3MjYsImV4cCI6MTcwNzU2NzEyNn0.jJhBh9CwHu7Nk9m35iAS-jqHsGOvZnWR9YgL1CdWCm8"
           }
       });
   
@@ -56,6 +74,7 @@ export const createProductPlane = async (productPlaneDto: ProductPlaneDto) => {
           method: "PUT",
           headers: {
               "Content-Type": "application/json",
+              "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lMUBnbWFpbC5jb20iLCJpYXQiOjE3MDc0ODA3MjYsImV4cCI6MTcwNzU2NzEyNn0.jJhBh9CwHu7Nk9m35iAS-jqHsGOvZnWR9YgL1CdWCm8"
           },
           body: JSON.stringify(productPlaneDto)
       });

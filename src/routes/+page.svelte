@@ -35,6 +35,7 @@
     </div>
 {/if}
 
+
 <style>
     .nav {
         display: flex;

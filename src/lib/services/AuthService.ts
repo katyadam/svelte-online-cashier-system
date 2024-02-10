@@ -25,3 +25,8 @@ export const registerUser = async (registerRequest: RegisterRequest): Promise<Au
 
     return response.json();
 }
+
+export const logout = () => {
+    localStorage.clear();
+    window.location.href = "/"
+}

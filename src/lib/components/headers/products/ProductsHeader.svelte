@@ -6,6 +6,7 @@
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
     import { showShopPanel, totalCount } from "../../../../store";
     import { createDownloadContent, startDownload } from "$lib/services/Downloader";
+    import type { User } from "$lib/interfaces/User";
 
     export let filterData: Function;
     export let productPlane: ProductPlane;
@@ -20,11 +21,16 @@
         editMode = true;
     }
 
+    let user: User;
     const editName = async () => {
+        let userJson = localStorage.getItem("user");
+		if (userJson != null) {
+			user = JSON.parse(userJson);
+        }
         if (productPlane) {
-                const updatedProductPlane: ProductPlaneDto = {
+            const updatedProductPlane: ProductPlaneDto = {
                 name: productPlane.name,
-                userId: 1 // TODO
+                userId: user.id
             }
             updateProductPlane(productPlane?.id, updatedProductPlane);
         }

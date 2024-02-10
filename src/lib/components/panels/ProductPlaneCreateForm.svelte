@@ -2,18 +2,23 @@
 	import { createProductPlane } from "$lib/services/ProductPlaneService";
 	import type { ProductPlaneDto } from "$lib/interfaces/ProductPlane";
     import { showProductPlaneCreate } from "../../../store";
-	
+    import type { User } from "$lib/interfaces/User";
 	
 	let name = "";
+	let user: User;
 	const handleSubmit = () => {
-		let productPlaneDto: ProductPlaneDto = {
-			name: name,
-			userId: 1
-		};
-		
-		createProductPlane(productPlaneDto);
-		location.reload();
-		$showProductPlaneCreate = false;
+		let userJson = localStorage.getItem("user");
+		if (userJson != null) {
+			user = JSON.parse(userJson);
+			let productPlaneDto: ProductPlaneDto = {
+				name: name,
+				userId: user.id
+			};
+			
+			createProductPlane(productPlaneDto);
+			location.reload();
+			$showProductPlaneCreate = false;		
+		}
 	};
 </script>
   

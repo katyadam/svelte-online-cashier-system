@@ -3,15 +3,16 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export const createProduct = async (productDto: ProductDto) => {
     const response = await fetch(`${apiUrl}/products`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(productDto),
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${localStorage.getItem("token")}`
+		},
+		body: JSON.stringify(productDto),
     });
   
     if (!response.ok) {
-      throw new Error(`Failed to create ProductPlane: ${response.statusText}`);
+		throw new Error(`Failed to create ProductPlane: ${response.statusText}`);
     }
   
     return response.json();
@@ -27,6 +28,7 @@ export const deleteProduct = async (id: number | undefined) => {
 		method: "DELETE",
 		headers: {
 			"Content-Type": "application/json",
+			"Authorization": `Bearer ${localStorage.getItem("token")}`
 		}
 	});
 
@@ -46,6 +48,7 @@ export const updateProduct = async (id: number | undefined, productDto: ProductD
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
+			"Authorization": `Bearer ${localStorage.getItem("token")}`
 		},
 		body: JSON.stringify(productDto)
 	});

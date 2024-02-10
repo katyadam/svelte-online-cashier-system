@@ -1,6 +1,7 @@
 <script lang="ts">
     import LoginForm from "$lib/components/auth/LoginForm.svelte";
     import RegisterForm from "$lib/components/auth/RegisterForm.svelte";
+    import { logout } from "$lib/services/AuthService";
     let showLogin = false;
     let showRegister = false;
 </script>

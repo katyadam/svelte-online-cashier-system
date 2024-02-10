@@ -6,16 +6,17 @@ export const createTransaction = async (transactionDto: TransactionDto) => {
 	const response = await fetch(`${apiUrl}/transactions`, {
 		method: 'POST',
 		headers: {
-		  'Content-Type': 'application/json',
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${localStorage.getItem("token")}`
 		},
 		body: JSON.stringify(transactionDto),
-	  });
+	});
 	
-	  if (!response.ok) {
+	if (!response.ok) {
 		throw new Error(`Failed to create Transaction: ${response.statusText}`);
-	  }
+	}
 	
-	  return response.json();
+	return response.json();
 }
 
 interface TransactionsResponse {

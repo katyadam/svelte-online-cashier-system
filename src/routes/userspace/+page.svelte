@@ -8,16 +8,22 @@
 	import TransactionsTable from "$lib/components/panels/TransactionsPanel.svelte";
 	import { getProductsPlanes } from "$lib/services/ProductPlaneService";
     import { showProductPlaneCreate, showTransactions } from "../../store";
+    import type { User } from "$lib/interfaces/User";
 
     let productPlanes: ProductPlane[] | null = null;
 	let initialProductPlanes: ProductPlane[];	
-    onMount(async () => {
-      try {
-			productPlanes = await getProductsPlanes(1);
-			initialProductPlanes = productPlanes;		
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
+    let user: User;
+	onMount(async () => {
+		try {
+			let userJson = localStorage.getItem("user");
+			if (userJson != null) {
+				user = JSON.parse(userJson);
+				productPlanes = await getProductsPlanes(user.id);
+				initialProductPlanes = productPlanes;		
+			}
+		} catch (error) {
+			console.error("Error fetching data: ", error);
+		}
     });
 
 	const filterData = async (searchTerm: string) => {

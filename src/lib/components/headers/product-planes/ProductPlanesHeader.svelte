@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { logout } from "$lib/services/AuthService";
     import { showTransactions } from "../../../../store";
     import SearchBar from "../SearchBar.svelte";
 
@@ -19,6 +20,9 @@
             <span class="title">Product planes</span>
             <button class="btn material-icons" title="Open transactions" on:click={() => {$showTransactions = true;}}>
                 list_alt
+            </button>
+            <button class="btn material-icons" title="Logout" on:click={() => logout()}>
+                power_settings_new
             </button>
         </div>
     </div>

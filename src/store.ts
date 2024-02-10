@@ -18,7 +18,3 @@ export const showShopPanel: Writable<boolean> = writable(false);
 
 export const shopProducts: Writable<Map<Product, number>> = writable(new Map());
 export const totalCount: Writable<number> = writable(0)
-
-// Auth
-export const jwtToken: Writable<string> = writable();
-export const user: Writable<User> = writable();

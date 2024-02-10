@@ -1,16 +1,16 @@
 <script lang="ts">
     import { loginUser } from "$lib/services/AuthService";
     import type { AuthResponse }  from "$lib/interfaces/Auth";
-    import { jwtToken, user } from "../../../store";
     import { jwtDecode } from "jwt-decode";
     import type { User } from "$lib/interfaces/User";
 
     let email = "";
     let password = "";
     const handleLogin = async () => {
-        const authResponse: AuthResponse = await loginUser({ email: email, password: password });        
-        $jwtToken = authResponse.access_token;
-        $user = jwtDecode<User>($jwtToken);
+        const authResponse: AuthResponse = await loginUser({ email: email, password: password });       
+        localStorage.setItem("token", authResponse.access_token);
+        localStorage.setItem("user", JSON.stringify(jwtDecode<User>(authResponse.access_token)));
+        window.location.href = "/userspace";
     };
   </script>
 

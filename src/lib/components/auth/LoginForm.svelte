@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { loginUser } from "$lib/services/AuthService";
+    import { loginUser, setLocalStorage } from "$lib/services/AuthService";
     import type { AuthResponse }  from "$lib/interfaces/Auth";
     import { jwtDecode } from "jwt-decode";
     import type { User } from "$lib/interfaces/User";
@@ -8,14 +8,13 @@
     let password = "";
     const handleLogin = async () => {
         const authResponse: AuthResponse = await loginUser({ email: email, password: password });       
-        localStorage.setItem("token", authResponse.access_token);
-        localStorage.setItem("user", JSON.stringify(jwtDecode<User>(authResponse.access_token)));
+        setLocalStorage(authResponse);
         window.location.href = "/userspace";
     };
   </script>
 
 <div class="login-container">
-    <h2>Please login</h2>
+    <h2>Login</h2>
   
     <form action="">
         <div class="input-group">

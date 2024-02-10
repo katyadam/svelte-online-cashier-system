@@ -1,25 +1,52 @@
-<script>
-    let username = '';
-    let password = '';
-  
-    const handleLogin = async () => {
+<script lang="ts">
+    import type { AuthResponse } from "$lib/interfaces/Auth";
+    import type { User } from "$lib/interfaces/User";
+    import { registerUser, setLocalStorage } from "$lib/services/AuthService";
+    import { jwtDecode } from "jwt-decode";
+
+    let givenName = "";
+    let familyName = "";
+    let email = "";
+    let password = "";
+    
+    const handleRegister = async () => {
+        const authResponse: AuthResponse = await registerUser({
+            givenName: givenName,
+            familyName: familyName,
+            email: email,
+            password: password,
+            role: "USER"
+        });
+
+        setLocalStorage(authResponse);
+        window.location.href = "/userspace";
     };
   </script>
 
 <div class="login-container">
-    <h2>Please login</h2>
+    <h2>Register</h2>
   
-    <form action="">
+    <form>
         <div class="input-group">
-            <label for="username">Email:</label>
-            <input type="email" bind:value={username} id="username" />
+            <label for="givenName">Given Name (first name):</label>
+            <input type="text" bind:value={givenName} id="givenName" />
+        </div>
+
+        <div class="input-group">
+            <label for="familyName">Family Name (last name):</label>
+            <input type="text" bind:value={familyName} id="familyName" />
+        </div>
+
+        <div class="input-group">
+            <label for="email">Email:</label>
+            <input type="email" bind:value={email} id="email" />
         </div>
         
         <div class="input-group">
             <label for="password">Password:</label>
             <input type="password" bind:value={password} id="password" />
         </div>
-        <input type="submit" on:click={handleLogin} class="login-button" value="Login" />
+        <input type="submit" on:click={handleRegister} class="login-button" value="Register" />
     </form>
   
 </div>

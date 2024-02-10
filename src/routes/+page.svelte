@@ -1,14 +1,14 @@
 <script lang="ts">
     import LoginForm from "$lib/components/auth/LoginForm.svelte";
     import RegisterForm from "$lib/components/auth/RegisterForm.svelte";
-    import { logout } from "$lib/services/AuthService";
+    import { logPublicUser } from "$lib/services/AuthService";
     let showLogin = false;
     let showRegister = false;
 </script>
 
 <svelte:head>
     <title>Home</title>
-    <meta name="description" content="Svelte demo app"/>    
+    <meta name="description" content="online cashier system"/>    
 </svelte:head>
 
 <div class="nav">
@@ -16,7 +16,7 @@
         <a class="title" href="/">Online cashier system</a>
     </div>
     <div class="right-section">
-        <a class="tab" href="/userspace">Show demo</a>
+        <button class="tab" on:click={() => logPublicUser()}>Try demo</button>
         <a class="tab" href="/about">About</a>
         <button class="tab" on:click={() => {showLogin = true;}}>Login</button>
         <button class="tab" on:click={() => {showRegister = true;}}>Register</button>

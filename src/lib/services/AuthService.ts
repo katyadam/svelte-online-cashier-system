@@ -1,4 +1,6 @@
 import type { AuthRequest, AuthResponse, RegisterRequest } from "$lib/interfaces/Auth";
+import type { User } from "$lib/interfaces/User";
+import { jwtDecode } from "jwt-decode";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -29,4 +31,15 @@ export const registerUser = async (registerRequest: RegisterRequest): Promise<Au
 export const logout = () => {
     localStorage.clear();
     window.location.href = "/"
+}
+
+export const logPublicUser = async () => {
+    const response: AuthResponse = await loginUser({email: "public", password: "public"});
+    setLocalStorage(response);
+    window.location.href = "/userspace";
+}
+
+export const setLocalStorage = (authResponse: AuthResponse) => {
+    localStorage.setItem("token", authResponse.access_token);
+    localStorage.setItem("user", JSON.stringify(jwtDecode<User>(authResponse.access_token)));
 }

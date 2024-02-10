@@ -1,9 +1,18 @@
 <script lang="ts">
     import { logout } from "$lib/services/AuthService";
+    import { onMount } from "svelte";
     import { showTransactions } from "../../../../store";
     import SearchBar from "../SearchBar.svelte";
+    import type { User } from "$lib/interfaces/User";
 
     export let filterData: Function;
+    let user: User;
+    onMount(() => {
+        let userJson = localStorage.getItem("user");
+        if (userJson != null) {
+            user = JSON.parse(userJson);
+        }
+    })
 </script>
 
 <head>
@@ -17,7 +26,7 @@
             <SearchBar filterData={filterData}/>
         </div>
         <div class="right-side">
-            <span class="title">Product planes</span>
+            <span class="title">{user?.givenName} {user?.familyName}</span>
             <button class="btn material-icons" title="Open transactions" on:click={() => {$showTransactions = true;}}>
                 list_alt
             </button>

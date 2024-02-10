@@ -4,11 +4,11 @@
     import ShopPanelCard from "../cards/ShopPanelCard.svelte";
     import { storeCurrencyRates, storeSelectedCurrency, shopProducts } from "../../../store";
     import { afterUpdate } from "svelte";
+    import { getStoredUser } from "$lib/interfaces/User";
 
     export let removeProduct: Function;
     export let addProduct: Function;
     export let decrProduct: Function;
-
 
     const createRecord = (): string => {
         const jsonObject: { [key: string]: number } = {};
@@ -29,13 +29,16 @@
         if ($shopProducts.size == 0) {
             return;
         }
-        let transactionDto: TransactionDto = {
-            record: createRecord(),
-            userId: 1, // TODO
-        }
+        let user = getStoredUser();
+        if (user != null) {
+            let transactionDto: TransactionDto = {
+                record: createRecord(),
+                userId: user.id, // TODO
+            }
         
-        createTransaction(transactionDto);
-        location.reload();
+            createTransaction(transactionDto);
+            location.reload();
+        }
     }
     
     let totalPrice: number = 0;

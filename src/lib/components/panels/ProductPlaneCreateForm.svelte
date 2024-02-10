@@ -2,14 +2,12 @@
 	import { createProductPlane } from "$lib/services/ProductPlaneService";
 	import type { ProductPlaneDto } from "$lib/interfaces/ProductPlane";
     import { showProductPlaneCreate } from "../../../store";
-    import type { User } from "$lib/interfaces/User";
+    import { getStoredUser, type User } from "$lib/interfaces/User";
 	
 	let name = "";
-	let user: User;
 	const handleSubmit = () => {
-		let userJson = localStorage.getItem("user");
-		if (userJson != null) {
-			user = JSON.parse(userJson);
+		let user = getStoredUser();
+		if (user != null) {
 			let productPlaneDto: ProductPlaneDto = {
 				name: name,
 				userId: user.id

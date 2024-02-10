@@ -3,12 +3,16 @@
     import type { Transaction } from "$lib/interfaces/Transaction";
     import { onMount } from "svelte";
     import TransactionCard from "../cards/TransactionCard.svelte";
+    import { getStoredUser } from "$lib/interfaces/User";
 
     let txs:  Transaction[];
 
     onMount(async () => {
         try {
-            txs = await getUserTransactions(1);
+            let user = getStoredUser();
+            if (user != null) {
+                txs = await getUserTransactions(user.id);
+            }
         } catch (error) {
             console.error(error);
         }

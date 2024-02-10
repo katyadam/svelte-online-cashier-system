@@ -19,12 +19,14 @@ export const createTransaction = async (transactionDto: TransactionDto) => {
 	return response.json();
 }
 
-interface TransactionsResponse {
-	content: Transaction[];
-  }
-
 export const getUserTransactions = async (userId: number): Promise<Transaction[]> => {
-	const response = await fetch(`${apiUrl}/transactions`);
-	const result: TransactionsResponse = await response.json();
-	return result.content;
+	const response = await fetch(`${apiUrl}/users/${userId}/transactions`, {
+		method: "GET",
+		headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+	});
+	
+	return response.json();
 }

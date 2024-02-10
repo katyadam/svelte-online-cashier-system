@@ -7,3 +7,11 @@ export interface User {
     role: string;
     exp: number;
 }
+
+export const getStoredUser = (): User | null => {
+    let userJson = localStorage.getItem("user");
+    if (userJson == null) {
+        return null;
+    }
+    return JSON.parse(userJson);
+}

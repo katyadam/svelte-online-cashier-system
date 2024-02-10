@@ -1,8 +1,16 @@
-<script>
-    let username = '';
-    let password = '';
-  
+<script lang="ts">
+    import { loginUser } from "$lib/services/AuthService";
+    import type { AuthResponse }  from "$lib/interfaces/Auth";
+    import { jwtToken, user } from "../../../store";
+    import { jwtDecode } from "jwt-decode";
+    import type { User } from "$lib/interfaces/User";
+
+    let email = "";
+    let password = "";
     const handleLogin = async () => {
+        const authResponse: AuthResponse = await loginUser({ email: email, password: password });        
+        $jwtToken = authResponse.access_token;
+        $user = jwtDecode<User>($jwtToken);
     };
   </script>
 
@@ -12,7 +20,7 @@
     <form action="">
         <div class="input-group">
             <label for="username">Email:</label>
-            <input type="email" bind:value={username} id="username" />
+            <input type="email" bind:value={email} id="username" />
         </div>
         
         <div class="input-group">

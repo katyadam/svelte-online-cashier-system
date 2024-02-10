@@ -14,7 +14,7 @@ export const loginUser = async (authRequest: AuthRequest): Promise<AuthResponse>
     return response.json();
 }
 
-export const registerUser = async (registerRequest: RegisterRequest) => {
+export const registerUser = async (registerRequest: RegisterRequest): Promise<AuthResponse> => {
     const response = await fetch(`${apiUrl}/auth/register`, {
         method: "POST",
         headers: {

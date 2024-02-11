@@ -12,12 +12,14 @@
 	import { getProductPlane } from "$lib/services/ProductPlaneService";
     import { showProductCreate, showProductEdit, showShopPanel, totalCount, shopProducts } from "../../../store";
 	import ProductsGrid from "$lib/components/grids/ProductsGrid.svelte";
+    import LoginForm from "$lib/components/auth/LoginForm.svelte";
 
 	let productPlane: ProductPlane;
 	let products: Product[] | null = null;
 	let initialProducts: Product[] | null = null;
-
+	let isLoggedIn: boolean = false;
 	onMount(async () => {
+		isLoggedIn = localStorage.length == 2;
 		try {
 			productPlane = await getProductPlane($page.params.productPlane);
 			products = productPlane.productSet;
@@ -79,43 +81,47 @@
 	}
 
 </script>
+{#if isLoggedIn}
+	<main>
+		<ProductsHeader	
+			productPlane={productPlane}
+			filterData={filterData}
+		/>
+		{#if products}
+			<ProductsGrid addProduct={addProduct} products={products}/>
+		{:else}
+			<Loading />
+		{/if}
 
-<main>
-	<ProductsHeader	
-		productPlane={productPlane}
-		filterData={filterData}
-	/>
-	{#if products}
-        <ProductsGrid addProduct={addProduct} products={products}/>
-    {:else}
-        <Loading />
-    {/if}
+		{#if $showProductCreate}
+			<button class="overlay" on:click={() => {$showProductCreate = false;}}></button>
+			<div class="form-container">
+				<AddForm />
+			</div>
+		{/if}
 
-	{#if $showProductCreate}
-		<button class="overlay" on:click={() => {$showProductCreate = false;}}></button>
-		<div class="form-container">
-			<AddForm />
-		</div>
-	{/if}
-
-	{#if $showProductEdit}
-		<button class="overlay" on:click={() => {$showProductEdit = false;}}></button>
-		<div class="form-container">
-			<EditForm />
-		</div>
-	{/if}
-	
-	{#if $showShopPanel}
-		<button class="shop-panel-overlay" on:click={() => {$showShopPanel = false;}}></button>
-		<div class="shop-panel">
-			<ShopPanel
-				removeProduct={removeProduct}
-				addProduct={addProduct}
-				decrProduct={decrProduct}
-        />
-		</div>
-	{/if}
-</main>
+		{#if $showProductEdit}
+			<button class="overlay" on:click={() => {$showProductEdit = false;}}></button>
+			<div class="form-container">
+				<EditForm />
+			</div>
+		{/if}
+		
+		{#if $showShopPanel}
+			<button class="shop-panel-overlay" on:click={() => {$showShopPanel = false;}}></button>
+			<div class="shop-panel">
+				<ShopPanel
+					removeProduct={removeProduct}
+					addProduct={addProduct}
+					decrProduct={decrProduct}
+			/>
+			</div>
+		{/if}
+	</main>
+{:else}
+	<h2>You need to log in first or <a href="/register">register</a></h2>
+	<LoginForm />
+{/if}
 
 <style>
 

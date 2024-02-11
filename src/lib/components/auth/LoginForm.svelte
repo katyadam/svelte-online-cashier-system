@@ -1,8 +1,6 @@
 <script lang="ts">
     import { loginUser, setLocalStorage } from "$lib/services/AuthService";
     import type { AuthResponse }  from "$lib/interfaces/Auth";
-    import { jwtDecode } from "jwt-decode";
-    import type { User } from "$lib/interfaces/User";
 
     let email = "";
     let password = "";

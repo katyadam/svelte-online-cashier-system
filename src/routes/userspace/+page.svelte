@@ -6,18 +6,19 @@
 	import Loading from "$lib/components/Loading.svelte";
     import ProductPlaneCreateForm from "$lib/components/panels/ProductPlaneCreateForm.svelte";
 	import TransactionsTable from "$lib/components/panels/TransactionsPanel.svelte";
+	import LoginForm from "$lib/components/auth/LoginForm.svelte";
 	import { getProductsPlanes } from "$lib/services/ProductPlaneService";
     import { showProductPlaneCreate, showTransactions } from "../../store";
-    import type { User } from "$lib/interfaces/User";
+    import { getStoredUser, type User } from "$lib/interfaces/User";
 
     let productPlanes: ProductPlane[] | null = null;
 	let initialProductPlanes: ProductPlane[];	
-    let user: User;
+	let isLoggedIn: boolean = false;
 	onMount(async () => {
+		isLoggedIn = localStorage.length == 2;
 		try {
-			let userJson = localStorage.getItem("user");
-			if (userJson != null) {
-				user = JSON.parse(userJson);
+			let user = getStoredUser();
+			if (user != null) {
 				productPlanes = await getProductsPlanes(user.id);
 				initialProductPlanes = productPlanes;		
 			}
@@ -38,28 +39,33 @@
 
 </script>
   
-<main>
-	<ProductPlanesHeader filterData={filterData} />
-    {#if productPlanes}
-		<ProductPlanesGrid productPlanes={productPlanes}/>
-    {:else}
-        <Loading />
-    {/if}
+{#if isLoggedIn}
+	<main>
+		<ProductPlanesHeader filterData={filterData} />
+		{#if productPlanes}
+			<ProductPlanesGrid productPlanes={productPlanes}/>
+		{:else}
+			<Loading />
+		{/if}
 
-	{#if $showProductPlaneCreate}
-		<button class="overlay" on:click={() => {$showProductPlaneCreate = false;}}></button>
-		<div class="form-container">
-			<ProductPlaneCreateForm />
-		</div>
-	{/if}
+		{#if $showProductPlaneCreate}
+			<button class="overlay" on:click={() => {$showProductPlaneCreate = false;}}></button>
+			<div class="form-container">
+				<ProductPlaneCreateForm />
+			</div>
+		{/if}
 
-	{#if $showTransactions}
-		<button class="txs-table-overlay" on:click={() => {$showTransactions = false;}}></button>
-		<div class="txs-table">
-			<TransactionsTable />
-		</div>
-	{/if}
-</main>
+		{#if $showTransactions}
+			<button class="txs-table-overlay" on:click={() => {$showTransactions = false;}}></button>
+			<div class="txs-table">
+				<TransactionsTable />
+			</div>
+		{/if}
+	</main>
+{:else}
+	<h2>You need to log in first or <a href="/register">register</a></h2>
+	<LoginForm />
+{/if}
 
 <style>
 	.form-container {

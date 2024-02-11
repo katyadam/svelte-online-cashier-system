@@ -1,14 +1,22 @@
 <script lang="ts">
     import LoginForm from "$lib/components/auth/LoginForm.svelte";
     import RegisterForm from "$lib/components/auth/RegisterForm.svelte";
-    import { logPublicUser } from "$lib/services/AuthService";
+    import { logPublicUser, logout } from "$lib/services/AuthService";
+    import { onMount } from "svelte";
     let showLogin = false;
     let showRegister = false;
+    
+    let isEmpty = true;
+    onMount(() => {
+        isEmpty = localStorage.length == 0;
+    })
+
 </script>
 
 <svelte:head>
     <title>Home</title>
     <meta name="description" content="online cashier system"/>    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </svelte:head>
 
 <div class="nav">
@@ -16,10 +24,14 @@
         <a class="title" href="/">Online cashier system</a>
     </div>
     <div class="right-section">
-        <button class="tab" on:click={() => logPublicUser()}>Try demo</button>
         <a class="tab" href="/about">About</a>
-        <button class="tab" on:click={() => {showLogin = true;}}>Login</button>
-        <button class="tab" on:click={() => {showRegister = true;}}>Register</button>
+        {#if isEmpty} 
+            <button class="tab" on:click={() => logPublicUser()}>Try demo</button>
+            <button class="tab" on:click={() => {showLogin = true;}}>Login</button>
+            <button class="tab" on:click={() => {showRegister = true;}}>Register</button>
+        {:else}
+            <button class="tab material-icons" on:click={() => logout()}>power_settings_new</button>
+        {/if}
     </div>
 </div>
 

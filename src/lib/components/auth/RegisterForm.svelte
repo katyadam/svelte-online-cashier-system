@@ -1,8 +1,6 @@
 <script lang="ts">
     import type { AuthResponse } from "$lib/interfaces/Auth";
-    import type { User } from "$lib/interfaces/User";
     import { registerUser, setLocalStorage } from "$lib/services/AuthService";
-    import { jwtDecode } from "jwt-decode";
 
     let givenName = "";
     let familyName = "";

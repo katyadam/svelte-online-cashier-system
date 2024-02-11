@@ -3,15 +3,12 @@
     import { onMount } from "svelte";
     import { showTransactions } from "../../../../store";
     import SearchBar from "../SearchBar.svelte";
-    import type { User } from "$lib/interfaces/User";
+    import { getStoredUser, type User } from "$lib/interfaces/User";
 
     export let filterData: Function;
-    let user: User;
+    let user: User | null;
     onMount(() => {
-        let userJson = localStorage.getItem("user");
-        if (userJson != null) {
-            user = JSON.parse(userJson);
-        }
+        user = getStoredUser();
     })
 </script>
 

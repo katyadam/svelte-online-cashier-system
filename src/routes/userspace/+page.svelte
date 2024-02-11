@@ -6,10 +6,9 @@
 	import Loading from "$lib/components/Loading.svelte";
     import ProductPlaneCreateForm from "$lib/components/panels/ProductPlaneCreateForm.svelte";
 	import TransactionsTable from "$lib/components/panels/TransactionsPanel.svelte";
-	import LoginForm from "$lib/components/auth/LoginForm.svelte";
 	import { getProductsPlanes } from "$lib/services/ProductPlaneService";
     import { showProductPlaneCreate, showTransactions } from "../../store";
-    import { getStoredUser, type User } from "$lib/interfaces/User";
+    import { getStoredUser } from "$lib/interfaces/User";
 
     let productPlanes: ProductPlane[] | null = null;
 	let initialProductPlanes: ProductPlane[];	

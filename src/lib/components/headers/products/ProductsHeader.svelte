@@ -89,10 +89,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 20px;
     }
 
     .left-side {
-        margin-left: 10px;
+        /* margin-left: 10px; */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -110,7 +111,6 @@
     }
 
     .right-side {
-        padding: 15px;
         display: flex;
         align-items: center;
     }

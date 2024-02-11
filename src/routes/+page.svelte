@@ -56,6 +56,7 @@
         align-items: center;
         background-color: #fff;
         width: 100%;
+        margin-top: 25px;
     }
 
     .left-section {

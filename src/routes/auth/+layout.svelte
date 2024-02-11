@@ -1,9 +1,15 @@
-
 <script lang="ts">
-    
+    import AuthHeader from "$lib/components/headers/auth/AuthHeader.svelte";   
 </script>
 
-<div>
-    <h2><a href="/auth/login">Log In</a> or <a href="/auth/register">Register</a></h2>
+<div class="container">
+    <AuthHeader />
     <slot />
 </div>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

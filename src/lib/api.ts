@@ -32,7 +32,6 @@ export const importProducts = async (event: Event, productPlaneId: number, files
     const response = await fetch(`${apiUrl}/products/upload/${productPlaneId}`, {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         body: formData,

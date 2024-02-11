@@ -5,14 +5,12 @@
     import { onMount } from "svelte";
     import ProductsHeader from "$lib/components/headers/products/ProductsHeader.svelte";
 	import ShopPanel from "$lib/components/panels/ShopPanel.svelte";
-	import ProductCard from "$lib/components/cards/ProductCard.svelte";
     import Loading from "$lib/components/Loading.svelte";
 	import AddForm from "$lib/components/panels/ProductCreateForm.svelte";
 	import EditForm from "$lib/components/panels/ProductEditForm.svelte"
 	import { getProductPlane } from "$lib/services/ProductPlaneService";
     import { showProductCreate, showProductEdit, showShopPanel, totalCount, shopProducts } from "../../../store";
 	import ProductsGrid from "$lib/components/grids/ProductsGrid.svelte";
-    import LoginForm from "$lib/components/auth/LoginForm.svelte";
 
 	let productPlane: ProductPlane;
 	let products: Product[] | null = null;

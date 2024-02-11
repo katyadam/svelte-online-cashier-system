@@ -1,4 +1,5 @@
 import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
+import { getStoredUser, type User } from "$lib/interfaces/User";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 
@@ -16,7 +17,22 @@ export const getProductsPlanes = async (userId: number): Promise<ProductPlane[]>
 	return response.json();
 }
 
+const authorizeUserProductPlane = async (productPlaneId: string) => {
+    let user: User | null = getStoredUser();
+    if (user != null) {
+        const productPlanes: ProductPlane[] = await getProductsPlanes(user.id);
+        return productPlanes.some(pp => pp.id == parseInt(productPlaneId));
+    }
+    return false;
+}
+
 export const getProductPlane = async (productPlaneId: string): Promise<ProductPlane> => {
+    const canBeAccessed = await authorizeUserProductPlane(productPlaneId);
+    if (!canBeAccessed) {
+        window.location.href = "/err"
+        throw new Error("Unauthorized access!");
+    }
+    
     const response = await fetch(`${apiUrl}/product-planes/${productPlaneId}`, {
         method: "GET",
         headers: {

@@ -51,8 +51,10 @@
   
 <style>
     .login-container {
-        max-width: 500px;
+        max-width: 600px;
+        width: 70%;
         padding: 20px;
+        margin: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         position: absolute;

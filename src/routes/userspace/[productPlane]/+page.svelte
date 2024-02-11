@@ -20,6 +20,9 @@
 	let isLoggedIn: boolean = false;
 	onMount(async () => {
 		isLoggedIn = localStorage.length == 2;
+		if (!isLoggedIn) {
+			window.location.href = "/auth/login";
+		}
 		try {
 			productPlane = await getProductPlane($page.params.productPlane);
 			products = productPlane.productSet;
@@ -81,47 +84,43 @@
 	}
 
 </script>
-{#if isLoggedIn}
-	<main>
-		<ProductsHeader	
-			productPlane={productPlane}
-			filterData={filterData}
+
+<main>
+	<ProductsHeader	
+		productPlane={productPlane}
+		filterData={filterData}
+	/>
+	{#if products}
+		<ProductsGrid addProduct={addProduct} products={products}/>
+	{:else}
+		<Loading />
+	{/if}
+
+	{#if $showProductCreate}
+		<button class="overlay" on:click={() => {$showProductCreate = false;}}></button>
+		<div class="form-container">
+			<AddForm />
+		</div>
+	{/if}
+
+	{#if $showProductEdit}
+		<button class="overlay" on:click={() => {$showProductEdit = false;}}></button>
+		<div class="form-container">
+			<EditForm />
+		</div>
+	{/if}
+	
+	{#if $showShopPanel}
+		<button class="shop-panel-overlay" on:click={() => {$showShopPanel = false;}}></button>
+		<div class="shop-panel">
+			<ShopPanel
+				removeProduct={removeProduct}
+				addProduct={addProduct}
+				decrProduct={decrProduct}
 		/>
-		{#if products}
-			<ProductsGrid addProduct={addProduct} products={products}/>
-		{:else}
-			<Loading />
-		{/if}
-
-		{#if $showProductCreate}
-			<button class="overlay" on:click={() => {$showProductCreate = false;}}></button>
-			<div class="form-container">
-				<AddForm />
-			</div>
-		{/if}
-
-		{#if $showProductEdit}
-			<button class="overlay" on:click={() => {$showProductEdit = false;}}></button>
-			<div class="form-container">
-				<EditForm />
-			</div>
-		{/if}
-		
-		{#if $showShopPanel}
-			<button class="shop-panel-overlay" on:click={() => {$showShopPanel = false;}}></button>
-			<div class="shop-panel">
-				<ShopPanel
-					removeProduct={removeProduct}
-					addProduct={addProduct}
-					decrProduct={decrProduct}
-			/>
-			</div>
-		{/if}
-	</main>
-{:else}
-	<h2>You need to log in first or <a href="/register">register</a></h2>
-	<LoginForm />
-{/if}
+		</div>
+	{/if}
+</main>
 
 <style>
 

@@ -30,6 +30,7 @@
             <button class="tab" on:click={() => {showLogin = true;}}>Login</button>
             <button class="tab" on:click={() => {showRegister = true;}}>Register</button>
         {:else}
+            <a class="tab" href="/userspace">Product planes</a>
             <button class="tab material-icons" on:click={() => logout()}>power_settings_new</button>
         {/if}
     </div>

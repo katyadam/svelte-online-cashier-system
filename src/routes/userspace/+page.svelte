@@ -16,6 +16,9 @@
 	let isLoggedIn: boolean = false;
 	onMount(async () => {
 		isLoggedIn = localStorage.length == 2;
+		if (!isLoggedIn) {
+			window.location.href = "/auth/login";
+		}
 		try {
 			let user = getStoredUser();
 			if (user != null) {
@@ -39,33 +42,28 @@
 
 </script>
   
-{#if isLoggedIn}
-	<main>
-		<ProductPlanesHeader filterData={filterData} />
-		{#if productPlanes}
-			<ProductPlanesGrid productPlanes={productPlanes}/>
-		{:else}
-			<Loading />
-		{/if}
+<main>
+	<ProductPlanesHeader filterData={filterData} />
+	{#if productPlanes}
+		<ProductPlanesGrid productPlanes={productPlanes}/>
+	{:else}
+		<Loading />
+	{/if}
 
-		{#if $showProductPlaneCreate}
-			<button class="overlay" on:click={() => {$showProductPlaneCreate = false;}}></button>
-			<div class="form-container">
-				<ProductPlaneCreateForm />
-			</div>
-		{/if}
+	{#if $showProductPlaneCreate}
+		<button class="overlay" on:click={() => {$showProductPlaneCreate = false;}}></button>
+		<div class="form-container">
+			<ProductPlaneCreateForm />
+		</div>
+	{/if}
 
-		{#if $showTransactions}
-			<button class="txs-table-overlay" on:click={() => {$showTransactions = false;}}></button>
-			<div class="txs-table">
-				<TransactionsTable />
-			</div>
-		{/if}
-	</main>
-{:else}
-	<h2>You need to log in first or <a href="/register">register</a></h2>
-	<LoginForm />
-{/if}
+	{#if $showTransactions}
+		<button class="txs-table-overlay" on:click={() => {$showTransactions = false;}}></button>
+		<div class="txs-table">
+			<TransactionsTable />
+		</div>
+	{/if}
+</main>
 
 <style>
 	.form-container {

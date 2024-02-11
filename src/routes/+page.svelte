@@ -52,25 +52,32 @@
 
 <style>
     .nav {
+        position: absolute;
         display: flex;
         align-items: center;
-        background-color: #fff;
         width: 100%;
-        margin-top: 25px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .left-section {
         display: flex;
+        flex-direction: column;
         margin-left: 15px;
+        max-width: 50%;
     }
 
     .tab {
         text-decoration: none;
         font-size: 20px;
         cursor: pointer;
-        border: none;
+        border: 1px solid;
         background-color: #fff;
-        padding: 5px;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 30px;
+        border-radius: 5%;
     }
 
     .tab:hover {
@@ -78,14 +85,18 @@
         transition-duration: 1s;
     }
 
+
     .title {
         text-decoration: none;
-        font-size: 25px;
+        font-size: 120px;
     }
 
     .right-section {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        right: 10%;
         margin-left: auto;
-        margin-right: 15px;
     }
 
     .form {
@@ -110,5 +121,18 @@
         height: 100%;
         background-color: rgba(186, 186, 186, 0.5);
         z-index: 999;
+    }
+
+    @media (max-width: 768px) {
+        .title {
+            font-size: 40px;
+        }
+        .right-section {
+            right: 5%;
+        }
+        .tab {
+            padding: 5px;
+            margin-bottom: 8px;
+        }
     }
 </style>

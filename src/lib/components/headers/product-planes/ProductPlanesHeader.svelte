@@ -22,6 +22,7 @@
             <a class="left-btn material-icons" href="/">arrow_back</a>
             <SearchBar filterData={filterData}/>
         </div>
+        <p class="title">Product planes</p>
         <div class="right-side">
             <span class="title">{user?.givenName} {user?.familyName}</span>
             <button class="btn material-icons" title="Open transactions" on:click={() => {$showTransactions = true;}}>
@@ -52,12 +53,15 @@
         font-size: 20px;
         text-decoration: none;
         margin-right: 10px;
+        margin: 0;
     }
 
     .right-side {
         display: flex;
         align-items: center;
     }
+
+
 
     .btn {
         cursor: pointer;

@@ -93,7 +93,6 @@
     }
 
     .left-side {
-        /* margin-left: 10px; */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -108,6 +107,7 @@
         text-decoration: none;
         background: none;
         cursor: text;
+        margin: 0;
     }
 
     .right-side {

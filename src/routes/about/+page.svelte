@@ -16,15 +16,17 @@
 
     
     <ul>
+      <li>You can register or use public demo account.</li>
       <li>Product planes and products can be created, edited, and deleted.</li>
+      <li>Each product plane can contain products.</li>
       <li>Every product has a starting price and initial currency.</li>
       <li>You have the option to alter the currency in which products are displayed.</li>
       <li>Products can be selected, added to a cart, and a new transaction can be started.</li>
       <li>Each transaction is stored and can be listed afterwards.</li>
-      <li>Product planes will be deleted each day at 3:00AM (CET). Transactions each hour.</li>
-      <li>You can filter product planes and products.</li>
+      <li>Public product planes will be deleted each day at 3:00AM (CET). Public transactions each hour.</li>
+      <li>You can filter product planes and products by their name.</li>
       <li>Products can be uploaded via text file.</li>
-      <li>Products can be downloaded as a text file with format: name,price,currency</li>
+      <li>Products can be downloaded as a text file in format: name,price,currency</li>
     </ul>
 
 </section>

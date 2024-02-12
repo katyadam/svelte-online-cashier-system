@@ -32,7 +32,6 @@
 
 <style>
     .currency-list {
-        margin: 15px;
         border: none;
         font-size: 20px;
         cursor: pointer;

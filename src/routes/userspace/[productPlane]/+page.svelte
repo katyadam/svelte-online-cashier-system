@@ -4,18 +4,23 @@
 	import { page } from "$app/stores";
     import { onMount } from "svelte";
     import ProductsHeader from "$lib/components/headers/products/ProductsHeader.svelte";
-	import ShopPanel from "$lib/components/ShopPanel.svelte";
-	import ProductCard from "$lib/components/ProductCard.svelte";
+	import ShopPanel from "$lib/components/panels/ShopPanel.svelte";
     import Loading from "$lib/components/Loading.svelte";
-	import AddForm from "$lib/components/crud/ProductCreateForm.svelte";
-	import EditForm from "$lib/components/crud/ProductEditForm.svelte"
+	import AddForm from "$lib/components/panels/ProductCreateForm.svelte";
+	import EditForm from "$lib/components/panels/ProductEditForm.svelte"
 	import { getProductPlane } from "$lib/services/ProductPlaneService";
+    import { showProductCreate, showProductEdit, showShopPanel, totalCount, shopProducts } from "../../../store";
+	import ProductsGrid from "$lib/components/grids/ProductsGrid.svelte";
 
 	let productPlane: ProductPlane;
 	let products: Product[] | null = null;
 	let initialProducts: Product[] | null = null;
-
+	let isLoggedIn: boolean = false;
 	onMount(async () => {
+		isLoggedIn = localStorage.length == 2;
+		if (!isLoggedIn) {
+			window.location.href = "/auth/login";
+		}
 		try {
 			productPlane = await getProductPlane($page.params.productPlane);
 			products = productPlane.productSet;
@@ -25,64 +30,34 @@
 		}
 	})
 
-	let showForm: boolean = false;
-	const openForm = () => {
-		showForm = true;
-	}
-	const closeForm = () => {
-		showForm = false;
-	}
-
-	let showEditForm: boolean = false;
-	let productToEdit: Product;
-	const openEditForm = (product: Product) => {
-		showEditForm = true;
-		productToEdit = product;
-		event?.stopPropagation()
-	}
-	const closeEditForm = () => {
-		showEditForm = false;
-	}
-
-	let showShopPanel: boolean = false;
-	const openShopPanel = () => {
-		showShopPanel = true;
-	}
-
-	const closeShopPanel = () => {
-		showShopPanel = false;
-	}
-	
-	let shopProducts: Map<Product, number> = new Map();
-	let totalCount: number = 0;
 	const removeProduct = (id: number) => {
-		let newShopProducts = shopProducts;
-		for (const [product, amount] of newShopProducts) {
-			if (product.id === id) {
-				newShopProducts.delete(product);
-				totalCount -= amount;
-				break;
-			}
-		}
-		shopProducts = newShopProducts;
-	}
+        let newShopProducts = $shopProducts;
+        for (const [product, amount] of newShopProducts) {
+            if (product.id === id) {
+                newShopProducts.delete(product);
+                $totalCount -= amount;
+                break;
+            }
+        }
+        $shopProducts = newShopProducts;
+    }
 	const addProduct = (product: Product) => {
-		let newShopProducts = shopProducts;
+		let newShopProducts = $shopProducts;
 		if (newShopProducts.has(product)) {
 			let currAmount = newShopProducts.get(product);
 			if (currAmount != undefined && currAmount > 0) {
 				newShopProducts.set(product, currAmount + 1);
-				shopProducts = newShopProducts;
+				$shopProducts = newShopProducts;
 			} else {
 				console.error("Invalid product amount!")
 			}
 		} else {
-			shopProducts.set(product, 1);
+			$shopProducts.set(product, 1);
 		}
-		totalCount += 1
+		$totalCount += 1
 	}
 	const decrProduct = (product: Product) => {
-		let newShopProducts = shopProducts;
+		let newShopProducts = $shopProducts;
 		if (newShopProducts.has(product)) {
 			let currentAmount = newShopProducts.get(product);
 			if (currentAmount == 1) {
@@ -92,8 +67,8 @@
 				newShopProducts.set(product, currentAmount ? currentAmount - 1 : 0);
 			}
 		}
-		shopProducts = newShopProducts;
-		totalCount -= 1;
+		$shopProducts = newShopProducts;
+		$totalCount -= 1;
 	}
 
 	const filterData = async (searchTerm: string) => {
@@ -106,73 +81,46 @@
 		products = filtered;
 	}
 
-
-
 </script>
 
 <main>
 	<ProductsHeader	
 		productPlane={productPlane}
-		openShopPanel={openShopPanel}
-		totalCount={totalCount}
 		filterData={filterData}
 	/>
 	{#if products}
-        <div class="grid-container">
-            {#each products.sort((a, b) => a.name.localeCompare(b.name)) as product (product.id)}
-				<button class="button" on:click={() => addProduct(product)}>
-					<ProductCard product={product} openEditForm={openEditForm}/>
-				</button>
-            {/each}
-			<button class="button" on:click={openForm}>
-				<ProductCard product={null} openEditForm={openEditForm}/>
-			</button>
-        </div>
-    {:else}
-        <Loading />
-    {/if}
+		<ProductsGrid addProduct={addProduct} products={products}/>
+	{:else}
+		<Loading />
+	{/if}
 
-	{#if showForm}
-		<button class="overlay" on:click={closeForm}></button>
+	{#if $showProductCreate}
+		<button class="overlay" on:click={() => {$showProductCreate = false;}}></button>
 		<div class="form-container">
-			<AddForm closeForm={closeForm} />
+			<AddForm />
 		</div>
 	{/if}
 
-	{#if showEditForm}
-		<button class="overlay" on:click={closeEditForm}></button>
+	{#if $showProductEdit}
+		<button class="overlay" on:click={() => {$showProductEdit = false;}}></button>
 		<div class="form-container">
-			<EditForm closeEditForm={closeEditForm} product={productToEdit}/>
+			<EditForm />
 		</div>
 	{/if}
 	
-	{#if showShopPanel}
-		<button class="shop-panel-overlay" on:click={closeShopPanel}></button>
+	{#if $showShopPanel}
+		<button class="shop-panel-overlay" on:click={() => {$showShopPanel = false;}}></button>
 		<div class="shop-panel">
 			<ShopPanel
-				shopProducts={shopProducts}
 				removeProduct={removeProduct}
 				addProduct={addProduct}
 				decrProduct={decrProduct}
-        />
+		/>
 		</div>
 	{/if}
 </main>
 
 <style>
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      max-height: 700px;
-      padding: 15px;
-    }
-
-	.button {
-		border: none;
-		background-color: white;
-		text-decoration: none;
-	}
 
 	.form-container {
 		position: fixed;
@@ -223,9 +171,6 @@
 		main {
 			width: 100%;
 		}
-        .grid-container {
-            grid-template-columns: 1fr;
-        }
 
         .form-container,
         .shop-panel {

@@ -1,39 +1,33 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import ProductPlaneCard from "$lib/components/ProductPlaneCard.svelte";
     import type { ProductPlane } from "$lib/interfaces/ProductPlane";
     import ProductPlanesHeader from "$lib/components/headers/product-planes/ProductPlanesHeader.svelte";
+	import ProductPlanesGrid from "$lib/components/grids/ProductPlanesGrid.svelte";
 	import Loading from "$lib/components/Loading.svelte";
-    import ProductPlaneCreateForm from "$lib/components/crud/ProductPlaneCreateForm.svelte";
-	import TransactionsTable from "$lib/components/TransactionsTable.svelte";
+    import ProductPlaneCreateForm from "$lib/components/panels/ProductPlaneCreateForm.svelte";
+	import TransactionsTable from "$lib/components/panels/TransactionsPanel.svelte";
 	import { getProductsPlanes } from "$lib/services/ProductPlaneService";
+    import { showProductPlaneCreate, showTransactions } from "../../store";
+    import { getStoredUser } from "$lib/interfaces/User";
 
     let productPlanes: ProductPlane[] | null = null;
 	let initialProductPlanes: ProductPlane[];	
-    onMount(async () => {
-      try {
-			productPlanes = await getProductsPlanes(1);
-			initialProductPlanes = productPlanes;		
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
+	let isLoggedIn: boolean = false;
+	onMount(async () => {
+		isLoggedIn = localStorage.length == 2;
+		if (!isLoggedIn) {
+			window.location.href = "/auth/login";
+		}
+		try {
+			let user = getStoredUser();
+			if (user != null) {
+				productPlanes = await getProductsPlanes(user.id);
+				initialProductPlanes = productPlanes;		
+			}
+		} catch (error) {
+			console.error("Error fetching data: ", error);
+		}
     });
-
-	let showCreateForm: boolean = false;
-	const openForm = () => {
-		showCreateForm = true;
-	}
-	const closeForm = () => {
-		showCreateForm = false;
-	}
-
-	let showTransactions: boolean = false;
-	const openTransactions = () => {
-		showTransactions = true;
-	}
-	const closeTransactions = () => {
-		showTransactions = false;
-	}
 
 	const filterData = async (searchTerm: string) => {
 		let filtered: ProductPlane[] = [];
@@ -48,54 +42,29 @@
 </script>
   
 <main>
-	<ProductPlanesHeader openTransactions={openTransactions} filterData={filterData} />
-    {#if productPlanes}
-        <div class="grid-container">
-            {#each productPlanes.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
-                <a href="/userspace/{item.id}" class="button">
-                  <ProductPlaneCard productPlane={item}/>
-				</a>
-            {/each}
-            <button class="button" on:click={openForm}>
-				<ProductPlaneCard productPlane={null} />
-			</button>
-        </div>
-    {:else}
-        <Loading />
-    {/if}
+	<ProductPlanesHeader filterData={filterData} />
+	{#if productPlanes}
+		<ProductPlanesGrid productPlanes={productPlanes}/>
+	{:else}
+		<Loading />
+	{/if}
 
-	{#if showCreateForm}
-		<button class="overlay" on:click={closeForm}></button>
+	{#if $showProductPlaneCreate}
+		<button class="overlay" on:click={() => {$showProductPlaneCreate = false;}}></button>
 		<div class="form-container">
-			<ProductPlaneCreateForm closeForm={closeForm} />
+			<ProductPlaneCreateForm />
 		</div>
 	{/if}
 
-	{#if showTransactions}
-		<button class="txs-table-overlay" on:click={closeTransactions}></button>
+	{#if $showTransactions}
+		<button class="txs-table-overlay" on:click={() => {$showTransactions = false;}}></button>
 		<div class="txs-table">
 			<TransactionsTable />
 		</div>
 	{/if}
 </main>
 
-
-
 <style>
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-      gap: 20px;
-      max-height: 700px;
-      padding: 20px;
-    }
-
-	.button {
-		border: none;
-		background-color: white;
-		text-decoration: none;
-	}
-
 	.form-container {
 		position: fixed;
 		top: 50%;
@@ -141,10 +110,6 @@
 		z-index: 999;
 	}
 	@media (max-width: 768px) {
-        .grid-container {
-            grid-template-columns: 1fr;
-        }
-
         .form-container,
         .txs-table {
             width: 90%;

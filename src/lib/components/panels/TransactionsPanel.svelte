@@ -2,13 +2,17 @@
     import { getUserTransactions } from "$lib/services/TransactionService";
     import type { Transaction } from "$lib/interfaces/Transaction";
     import { onMount } from "svelte";
-    import TransactionCard from "./TransactionCard.svelte";
+    import TransactionCard from "../cards/TransactionCard.svelte";
+    import { getStoredUser } from "$lib/interfaces/User";
 
     let txs:  Transaction[];
 
     onMount(async () => {
         try {
-            txs = await getUserTransactions(1);
+            let user = getStoredUser();
+            if (user != null) {
+                txs = await getUserTransactions(user.id);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -23,7 +27,7 @@
 <div class="transactions-box">
     <h2>Completed transactions</h2>
     {#if txs}
-        {#each txs.sort((a, b) => b.creationTime - a.creationTime) as tx (tx.id)}
+        {#each txs as tx (tx.id)}
             <div>
                 <TransactionCard transaction={tx}/>
             </div>

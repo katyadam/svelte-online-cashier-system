@@ -1,14 +1,15 @@
 <script lang="ts">
-    import ImportForm from "../../ImportForm.svelte";
+    import ImportForm from "../../panels/ImportForm.svelte";
     import CurrencySelect from "./CurrencySelect.svelte";
     import SearchBar from "../SearchBar.svelte";
     import { updateProductPlane } from "$lib/services/ProductPlaneService";
     import type { ProductPlane, ProductPlaneDto } from "$lib/interfaces/ProductPlane";
+    import { showShopPanel, totalCount } from "../../../../store";
+    import { createDownloadContent, startDownload } from "$lib/services/Downloader";
+    import { getStoredUser, type User } from "$lib/interfaces/User";
 
-    export let openShopPanel: Function | undefined;
     export let filterData: Function;
     export let productPlane: ProductPlane;
-    export let totalCount: number;
 
     let showFilesForm = false;
 
@@ -21,14 +22,19 @@
     }
 
     const editName = async () => {
-        if (productPlane) {
-                const updatedProductPlane: ProductPlaneDto = {
+        let user = getStoredUser();
+        if (productPlane && user != null) {
+            const updatedProductPlane: ProductPlaneDto = {
                 name: productPlane.name,
-                userId: 1 // TODO
+                userId: user.id
             }
             updateProductPlane(productPlane?.id, updatedProductPlane);
         }
         editMode = false;
+    }
+
+    const handleDownload = () => {
+        startDownload(createDownloadContent(productPlane.productSet), "products");
     }
 
 </script>
@@ -55,15 +61,18 @@
                     <button class="title" on:dblclick={openEditMode}>{productPlane.name}</button>
                 {/if}
             {/if}
-            <button class="right-button material-icons" title="Import products" on:click={openFilesForm} >cloud_upload</button>
-            {#if openShopPanel != null}
-                <button class="right-button" title="checkout" on:click={() => openShopPanel ? openShopPanel() : undefined}>
-                    <span class="material-icons">shopping_cart</span>
-                    {#if totalCount > 0}
-                        <span class="item-count">{totalCount}</span>
-                    {/if}
-                </button>
-            {/if}
+            <button class="right-button material-icons" title="Upload new products" on:click={openFilesForm} >
+                upload
+            </button>
+            <button class="right-button material-icons" title="Download products" on:click={handleDownload} >
+                download
+            </button>
+            <button class="right-button" title="checkout" on:click={() => {$showShopPanel = true}}>
+                <span class="material-icons">shopping_cart</span>
+                {#if $totalCount > 0}
+                    <span class="item-count">{$totalCount}</span>
+                {/if}
+            </button>
 
             {#if showFilesForm}
                 <button class="file-form-overlay" on:click={closeFilesForm}></button>
@@ -80,10 +89,10 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 20px;
     }
 
     .left-side {
-        margin-left: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -98,10 +107,10 @@
         text-decoration: none;
         background: none;
         cursor: text;
+        margin: 0;
     }
 
     .right-side {
-        padding: 15px;
         display: flex;
         align-items: center;
     }

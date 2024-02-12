@@ -1,8 +1,15 @@
 <script lang="ts">
+    import { logout } from "$lib/services/AuthService";
+    import { onMount } from "svelte";
+    import { showTransactions } from "../../../../store";
     import SearchBar from "../SearchBar.svelte";
+    import { getStoredUser, type User } from "$lib/interfaces/User";
 
-    export let openTransactions: Function;
     export let filterData: Function;
+    let user: User | null;
+    onMount(() => {
+        user = getStoredUser();
+    })
 </script>
 
 <head>
@@ -15,10 +22,14 @@
             <a class="left-btn material-icons" href="/">arrow_back</a>
             <SearchBar filterData={filterData}/>
         </div>
+        <p class="title">Product planes</p>
         <div class="right-side">
-            <span class="title">Product planes</span>
-            <button class="btn material-icons" title="Open transactions" on:click={() => openTransactions()}>
+            <span class="title">{user?.givenName} {user?.familyName}</span>
+            <button class="btn material-icons" title="Open transactions" on:click={() => {$showTransactions = true;}}>
                 list_alt
+            </button>
+            <button class="btn material-icons" title="Logout" on:click={() => logout()}>
+                power_settings_new
             </button>
         </div>
     </div>
@@ -42,12 +53,15 @@
         font-size: 20px;
         text-decoration: none;
         margin-right: 10px;
+        margin: 0;
     }
 
     .right-side {
         display: flex;
         align-items: center;
     }
+
+
 
     .btn {
         cursor: pointer;

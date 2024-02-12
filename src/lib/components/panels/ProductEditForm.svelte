@@ -1,16 +1,16 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { createProduct } from "$lib/services/ProductService";
-    import type { ProductDto } from "$lib/interfaces/Product";
-    import { getCurrencyList } from "$lib/api";
+    import { updateProduct } from "$lib/services/ProductService";
+    import type { ProductDto, Product } from "$lib/interfaces/Product";
+	import { getCurrencyList } from "$lib/api";
     import { onMount } from "svelte";
+    import { productToEdit, showProductEdit } from "../../../store";
 
-    export let closeForm: Function;
-	let selectedCurrency: string;
-
+	let product: Product = $productToEdit;
 	let currencyList: string[];
-    let name: string = "";
-    let price: number = 0;
+    let name: string = product?.name;
+    let price: number = product?.price;
+	let selectedCurrency: string = product?.currency;
 
     const handleSubmit = () => {
 		let productDto: ProductDto = {
@@ -19,10 +19,11 @@
 			price: price,
 			currency: selectedCurrency
 		};
-		createProduct(productDto);
+		updateProduct(product?.id, productDto);
 		location.reload();
-		closeForm();
+		$showProductEdit = false;
     };
+
 	onMount(async () => {
 		currencyList = await getCurrencyList();		
 	})
@@ -30,7 +31,7 @@
 
 
 <div>
-	<h2>Create new product</h2>
+	<h2>Edit product</h2>
 	<form on:submit|preventDefault={handleSubmit}>
 		<label for="name">Name:</label>
 		<input type="text" id="name" bind:value={name} required />
@@ -47,7 +48,7 @@
 			</select>
 		{/if}
 		
-		<button type="submit">Create</button>
+		<button type="submit">Edit</button>
 	</form>
 </div>
   

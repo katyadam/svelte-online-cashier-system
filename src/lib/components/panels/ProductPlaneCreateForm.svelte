@@ -1,19 +1,22 @@
 <script lang="ts">
 	import { createProductPlane } from "$lib/services/ProductPlaneService";
 	import type { ProductPlaneDto } from "$lib/interfaces/ProductPlane";
-	
-	export let closeForm: Function;
+    import { showProductPlaneCreate } from "../../../store";
+    import { getStoredUser, type User } from "$lib/interfaces/User";
 	
 	let name = "";
 	const handleSubmit = () => {
-		let productPlaneDto: ProductPlaneDto = {
-			name: name,
-			userId: 1
-		};
-		
-		createProductPlane(productPlaneDto);
-		location.reload();
-		closeForm();
+		let user = getStoredUser();
+		if (user != null) {
+			let productPlaneDto: ProductPlaneDto = {
+				name: name,
+				userId: user.id
+			};
+			
+			createProductPlane(productPlaneDto);
+			location.reload();
+			$showProductPlaneCreate = false;		
+		}
 	};
 </script>
   

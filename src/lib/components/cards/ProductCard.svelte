@@ -2,10 +2,9 @@
     import { deleteProduct } from "$lib/services/ProductService";
     import type { Product } from "$lib/interfaces/Product";
     import { afterUpdate } from "svelte";
-    import { storeCurrencyRates, storeSelectedCurrency } from "../../store";
+    import { productToEdit, showProductEdit, storeCurrencyRates, storeSelectedCurrency } from "../../../store";
 
     export let product: Product | null;
-    export let openEditForm: Function;
 
 	const handleDelete = () => {
 		event?.stopPropagation();
@@ -25,6 +24,14 @@
 		}
 	}
 
+	const openEdit = () => {
+		if (product) {
+			$showProductEdit= true;
+			$productToEdit = product;
+			event?.stopPropagation();
+		}
+	}
+
 	afterUpdate(() => setProductPrice());
 
 </script>
@@ -32,7 +39,7 @@
 <div class="product-card">
     {#if product}
 		<button class="remove-button material-icons" on:click={handleDelete}>delete</button>
-		<button class="edit-button material-icons" on:click={openEditForm(product)}>edit</button>
+		<button class="edit-button material-icons" on:click={openEdit}>edit</button>
 		<div class="card-content">
 			<h2>{product.name}</h2>
 			<h3>{`Price: ${productPrice} ${$storeSelectedCurrency}`}</h3>

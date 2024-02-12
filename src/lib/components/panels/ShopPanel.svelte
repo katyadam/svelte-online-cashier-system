@@ -25,7 +25,7 @@
         return JSON.stringify(jsonObject);
     }
 
-    const handleProceed = () => {
+    const handleProceed = async () => {
         if ($shopProducts.size == 0) {
             return;
         }
@@ -36,7 +36,7 @@
                 userId: user.id, // TODO
             }
         
-            createTransaction(transactionDto);
+            await createTransaction(transactionDto);
             location.reload();
         }
     }

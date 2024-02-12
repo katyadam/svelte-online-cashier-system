@@ -28,7 +28,7 @@
                 name: productPlane.name,
                 userId: user.id
             }
-            updateProductPlane(productPlane?.id, updatedProductPlane);
+            await updateProductPlane(productPlane?.id, updatedProductPlane);
         }
         editMode = false;
     }

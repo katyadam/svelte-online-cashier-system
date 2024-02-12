@@ -6,9 +6,9 @@
 
     export let product: Product | null;
 
-	const handleDelete = () => {
+	const handleDelete = async () => {
 		event?.stopPropagation();
-		deleteProduct(product?.id);
+		await deleteProduct(product?.id);
 		location.reload()
     }
 

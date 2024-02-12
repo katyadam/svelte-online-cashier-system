@@ -12,14 +12,14 @@
     let price: number = product?.price;
 	let selectedCurrency: string = product?.currency;
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 		let productDto: ProductDto = {
 			name: name,
 			productPlaneId: Number.parseInt($page.params.productPlane),
 			price: price,
 			currency: selectedCurrency
 		};
-		updateProduct(product?.id, productDto);
+		await updateProduct(product?.id, productDto);
 		location.reload();
 		$showProductEdit = false;
     };

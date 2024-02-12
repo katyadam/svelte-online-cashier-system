@@ -12,14 +12,14 @@
     let name: string = "";
     let price: number = 0;
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 		let productDto: ProductDto = {
 			name: name,
 			productPlaneId: Number.parseInt($page.params.productPlane),
 			price: price,
 			currency: selectedCurrency
 		};
-		createProduct(productDto);
+		await createProduct(productDto);
 		location.reload();
 		$showProductCreate = false;
     };

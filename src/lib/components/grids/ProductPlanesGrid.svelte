@@ -5,14 +5,18 @@
 
     export let productPlanes: ProductPlane[];
 
+    const goToProducts = (id: number) => {
+        window.location.href = `/userspace/${id}`
+    }
+
 </script>
 
 
 <div class="grid-container">
     {#each productPlanes.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
-        <a href="/userspace/{item.id}" class="button">
+        <button on:click={() => goToProducts(item.id)} class="button">
           <ProductPlaneCard productPlane={item}/>
-        </a>
+        </button>
     {/each}
     <button class="button" on:click={() => {$showProductPlaneCreate = true;}}>
         <ProductPlaneCard productPlane={null} />

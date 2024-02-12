@@ -5,7 +5,7 @@
     import { getStoredUser, type User } from "$lib/interfaces/User";
 	
 	let name = "";
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		let user = getStoredUser();
 		if (user != null) {
 			let productPlaneDto: ProductPlaneDto = {
@@ -13,7 +13,7 @@
 				userId: user.id
 			};
 			
-			createProductPlane(productPlaneDto);
+			await createProductPlane(productPlaneDto);
 			location.reload();
 			$showProductPlaneCreate = false;		
 		}

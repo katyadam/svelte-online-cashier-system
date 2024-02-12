@@ -4,8 +4,9 @@
 
     export let productPlane: ProductPlane | null;
     
-    const handleDelete = () => {
-		deleteProductPlane(productPlane?.id);
+    const handleDelete = async () => {
+		event?.stopPropagation();
+		await deleteProductPlane(productPlane?.id);
 		location.reload()
     }
 

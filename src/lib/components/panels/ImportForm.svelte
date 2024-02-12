@@ -7,7 +7,7 @@
 
     const handleSubmit = async (event: Event) => {
         if (productPlaneId != undefined) {
-            importProducts(event, productPlaneId, files);
+            await importProducts(event, productPlaneId, files);
             location.reload();
         } else {
             console.error(`Product plane id ${productPlaneId} is not valid!`);

@@ -6,8 +6,12 @@
     
     const handleDelete = async (event: MouseEvent) => {
 		event.stopPropagation();
-		await deleteProductPlane(productPlane?.id);
-		location.reload()
+		const confirmed = confirm(`Are you sure you want to delete "${productPlane?.name}" with ${productPlane?.productSet.length} products`);
+
+		if (confirmed) {
+			await deleteProductPlane(productPlane?.id);
+			location.reload();
+		}
     }
 
 </script>
@@ -25,7 +29,14 @@
 	{:else}
 		<h2>+</h2>
 	{/if}
-	
+</div>
+
+<div id="confirm-panel" class="panel">
+	<div class="confirm-content">
+		<p>Are you sure you want to delete this product plane?</p>
+		<button class="panel-button" id="confirm-button">Yes</button>
+        <button id="cancel-button">No</button>
+	</div>
 </div>
 
 <style>
@@ -79,4 +90,29 @@
 		margin: 0;
 		font-size: 30px;
 	}
+
+	.panel {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+	.confirm-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+	.panel-button {
+        margin: 5px;
+        padding: 10px;
+        cursor: pointer;
+    }
 </style>

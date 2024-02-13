@@ -10,7 +10,7 @@
 
 	let currencyList: string[];
     let name: string = "";
-    let price: number = 0;
+    let price: number;
 
     const handleSubmit = async () => {
 		let productDto: ProductDto = {
@@ -37,7 +37,7 @@
 		<input type="text" id="name" bind:value={name} required />
 		
 		<label for="price">Price:</label>
-		<input type="number" id="price" bind:value={price} required />
+		<input type="number" id="price" bind:value={price} min="0" required />
 		
 		{#if currencyList}
 			<label for="currency">Currency:</label>

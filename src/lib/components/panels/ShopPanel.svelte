@@ -6,9 +6,6 @@
     import { afterUpdate } from "svelte";
     import { getStoredUser } from "$lib/interfaces/User";
 
-    export let removeProduct: Function;
-    export let addProduct: Function;
-    export let decrProduct: Function;
 
     const createRecord = (): string => {
         const jsonObject: { [key: string]: number } = {};
@@ -72,10 +69,7 @@
     {#each $shopProducts as [product, amount]}
         <ShopPanelCard
             product={product}
-            removeProduct={removeProduct}
             amount={amount}
-            addProduct={addProduct}
-            decrProduct={decrProduct}
         />
     {/each}
 </div>

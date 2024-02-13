@@ -16,6 +16,7 @@
 	let products: Product[] | null = null;
 	let initialProducts: Product[] | null = null;
 	let isLoggedIn: boolean = false;
+	
 	onMount(async () => {
 		isLoggedIn = localStorage.length == 2;
 		if (!isLoggedIn) {
@@ -29,47 +30,6 @@
 			console.log(error)
 		}
 	})
-
-	const removeProduct = (id: number) => {
-        let newShopProducts = $shopProducts;
-        for (const [product, amount] of newShopProducts) {
-            if (product.id === id) {
-                newShopProducts.delete(product);
-                $totalCount -= amount;
-                break;
-            }
-        }
-        $shopProducts = newShopProducts;
-    }
-	const addProduct = (product: Product) => {
-		let newShopProducts = $shopProducts;
-		if (newShopProducts.has(product)) {
-			let currAmount = newShopProducts.get(product);
-			if (currAmount != undefined && currAmount > 0) {
-				newShopProducts.set(product, currAmount + 1);
-				$shopProducts = newShopProducts;
-			} else {
-				console.error("Invalid product amount!")
-			}
-		} else {
-			$shopProducts.set(product, 1);
-		}
-		$totalCount += 1
-	}
-	const decrProduct = (product: Product) => {
-		let newShopProducts = $shopProducts;
-		if (newShopProducts.has(product)) {
-			let currentAmount = newShopProducts.get(product);
-			if (currentAmount == 1) {
-				removeProduct(product.id);
-				return;
-			} else {
-				newShopProducts.set(product, currentAmount ? currentAmount - 1 : 0);
-			}
-		}
-		$shopProducts = newShopProducts;
-		$totalCount -= 1;
-	}
 
 	const filterData = async (searchTerm: string) => {
 		let filtered: Product[] = [];
@@ -89,7 +49,7 @@
 		filterData={filterData}
 	/>
 	{#if products}
-		<ProductsGrid addProduct={addProduct} products={products}/>
+		<ProductsGrid products={products}/>
 	{:else}
 		<Loading />
 	{/if}
@@ -112,9 +72,6 @@
 		<button class="shop-panel-overlay" on:click={() => {$showShopPanel = false;}}></button>
 		<div class="shop-panel">
 			<ShopPanel
-				removeProduct={removeProduct}
-				addProduct={addProduct}
-				decrProduct={decrProduct}
 		/>
 		</div>
 	{/if}

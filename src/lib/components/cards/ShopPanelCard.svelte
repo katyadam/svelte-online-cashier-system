@@ -2,10 +2,8 @@
     import type { Product } from "$lib/interfaces/Product";
     import { onMount } from "svelte";
     import { storeCurrencyRates, storeSelectedCurrency } from "../../../store";
+    import { addProduct, decrProduct, removeProduct } from "$lib/services/ShopProductsManager";
 
-    export let removeProduct: Function;
-    export let addProduct: Function;
-    export let decrProduct: Function;
     export let product: Product;
     export let amount: number;
 

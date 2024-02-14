@@ -9,7 +9,7 @@
 	import AddForm from "$lib/components/panels/ProductCreateForm.svelte";
 	import EditForm from "$lib/components/panels/ProductEditForm.svelte"
 	import { getProductPlane } from "$lib/services/ProductPlaneService";
-    import { showProductCreate, showProductEdit, showShopPanel, totalCount, shopProducts } from "../../../store";
+    import { showProductCreate, showProductEdit, showShopPanel } from "../../../store";
 	import ProductsGrid from "$lib/components/grids/ProductsGrid.svelte";
 
 	let productPlane: ProductPlane;

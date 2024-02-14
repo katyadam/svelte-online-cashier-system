@@ -28,7 +28,13 @@ export const registerUser = async (registerRequest: RegisterRequest): Promise<Au
     return response.json();
 }
 
-export const logout = () => {
+export const logout = async () => {
+    await fetch(`${apiUrl}/auth/logout`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
     localStorage.clear();
     window.location.href = "/"
 }
